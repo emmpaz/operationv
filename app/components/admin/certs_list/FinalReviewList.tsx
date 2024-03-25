@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { _getReviewCertificationsFromDB } from "../../../../utils/supabase/db_calls/API_calls";
+import { _getReviewCertificationsFromDB } from "../../../utils/supabase/db_calls/actions";
 import { CertificationStatus } from "../../../../helpers/Enums";
 import { iUserDB } from "../../../../helpers/DatabaseTypes";
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ interface iCertificationWithPendingCertsDB {
 
 const FinalReviewList = () => {
 
-    const { data, isLoading } = useQuery('pendingList', () => _getReviewCertificationsFromDB());
+    const { data, isLoading } = useQuery('distributionList', () => _getReviewCertificationsFromDB());
     const [noReviews, setNoReviews] = useState(true);
     const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<DistributionModelProps>();
 

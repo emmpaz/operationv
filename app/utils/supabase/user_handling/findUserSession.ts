@@ -1,7 +1,7 @@
 'use server';
 
-import { iUserDB } from "../../../helpers/DatabaseTypes";
-import { _addUserRoleAndDB, _getUserFromDB } from "../db_calls/API_calls";
+import { iUserDB } from "../../../../helpers/DatabaseTypes";
+import { _addUserRoleAndDB, _getUserFromDB } from "../db_calls/actions";
 import { createClient } from "../server";
 
 export const findUserSession = async (): Promise<iUserDB | null> => {

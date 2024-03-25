@@ -1,5 +1,5 @@
 'use server'
-import { _addAdminRoleAndDB, _getAdminFromDB } from "../db_calls/API_calls";
+import { _addAdminRoleAndDB, _getAdminFromDB } from "../db_calls/actions";
 import { createClient } from "../server";
 
 export const adminSignIn = async (email: string, password: string) => {

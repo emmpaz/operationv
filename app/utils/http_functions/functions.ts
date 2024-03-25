@@ -10,9 +10,8 @@ export const http_handleImageUpload = async (formData: FormData) => {
                 'Access-Control-Allow-Credentials': 'true'
             }
         });
-
         if (response.ok) {
-            return response.body;
+            return true;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -42,7 +41,7 @@ export const http_sendEmail = async (
               }
         });
         if(response.ok){
-            return response.body;
+            return true;
         }
     } catch (error) {
         console.error('Error:', error);

@@ -2,8 +2,8 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
-import { signInUser } from "../../../utils/supabase/user_handling/signInUser";
-import { signUpUser } from "../../../utils/supabase/user_handling/signUpUser";
+import { signInUser } from "../../utils/supabase/user_handling/signInUser";
+import { signUpUser } from "../../utils/supabase/user_handling/signUpUser";
 
 type Error = {
     bool: boolean,

@@ -1,6 +1,6 @@
-import { _acceptApplication } from "../../../../utils/supabase/db_calls/API_calls";
+import { _acceptApplication } from "../../../utils/supabase/db_calls/actions";
 import { ApplicationModelProps, ModelComponent } from "../../../../helpers/CustomModels";
-import { http_sendEmail } from "../../../../utils/http_functions/functions";
+import { http_sendEmail } from "../../../utils/http_functions/functions";
 
 
 

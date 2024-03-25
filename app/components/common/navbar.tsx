@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation"
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { signOut } from "../../../utils/supabase/user_handling/signOutUser";
+import { signOut } from "../../utils/supabase/user_handling/signOutUser";
 
 
 

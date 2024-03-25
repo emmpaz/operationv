@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { _getCompanyApplicationsFromDB } from "../../../../utils/supabase/db_calls/API_calls";
+import { _getCompanyApplicationsFromDB } from "../../../utils/supabase/db_calls/actions";
 import { iUserDB } from "../../../../helpers/DatabaseTypes";
 import { CertificationStatus } from "../../../../helpers/Enums";
 import AdminCertification from "../certification_models/AdminCertification";
@@ -33,12 +33,11 @@ interface iCertificationWithPendingCertsDB {
 }
 
 const PendingCertificationsList = (
-
+ 
 ) => {
-
     const [pendingCerts, setPendingCerts] = useState<iCertificationWithPendingCertsDB[]>([]);
 
-    const {data, isLoading} = useQuery('pendingList', () =>  _getCompanyApplicationsFromDB());
+    const {data, isLoading, refetch} = useQuery('pendingList', () =>  _getCompanyApplicationsFromDB());
 
     const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<ApplicationModelProps>();
 
@@ -53,12 +52,6 @@ const PendingCertificationsList = (
         )
     }
 
-    useEffect(() => {
-        if(data){
-            setPendingCerts(data);
-        }
-    }, [])
-
 
     return (
         isLoading ?
@@ -69,8 +62,8 @@ const PendingCertificationsList = (
             
             <div className="self-center max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {isOpen && ModelComponent && <ModelComponent {...modelProps as ApplicationModelProps} />}
-                {
-                    pendingCerts.map((cert: iCertificationWithPendingCertsDB) => {
+                { data.length > 0 ?
+                    data.map((cert: iCertificationWithPendingCertsDB) => {
                         return (
                             cert.PendingCertifications.map((pc: iPendingCertificationAdminDB, i) => {
                                 return (
@@ -89,6 +82,10 @@ const PendingCertificationsList = (
                             })
                         )
                     })
+                    :
+                    <div className="h-full flex justify-center items-center">
+                    <p>Currently there are no distributions needed :)</p>
+                    </div>
                 }
             </div>
     )

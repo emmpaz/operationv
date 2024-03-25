@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { _getReviewHourLogs } from "../../../../utils/supabase/db_calls/API_calls";
+import { _getReviewHourLogs } from "../../../utils/supabase/db_calls/actions";
 import { iCertificationDB, iHoursLoggingDB, iPendingCertificationDB, iUserDB } from "../../../../helpers/DatabaseTypes";
 import { ModelComponent, ReviewHoursModelProps, useModel } from "../../../../helpers/CustomModels";
 import ReviewLogModel from "../models/ReviewLogModel";
@@ -47,8 +47,8 @@ const ReviewHoursList = () => {
 
             <div className="h-full divide-y">
                 {isOpen && ModelComponent && <ModelComponent {...modelProps as ReviewHoursModelProps} />}
-                {(reviewList.length > 1) ?
-                    reviewList.map((hourLogged: FlattenedHoursLogged, i) => {
+                {(data.length > 1) ?
+                    data.map((hourLogged: FlattenedHoursLogged, i) => {
                         return (
                             <div key={i} className="px-5 py-2 flex justify-between hover:bg-accent cursor-pointer"
                                 onClick={() => handleReview(

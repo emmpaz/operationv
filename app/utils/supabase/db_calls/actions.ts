@@ -1,9 +1,10 @@
 'use server'
-import { iUserDB, iCertificationDB, iPendingCertificationDB } from "../../../helpers/DatabaseTypes";
-import { CertificationStatus, DBNames } from "../../../helpers/Enums";
+import { iCertificationDB, iPendingCertificationDB, iUserDB } from "../../../../helpers/DatabaseTypes";
+import { CertificationStatus, DBNames } from "../../../../helpers/Enums";
+
+
 import { http_handleImageUpload } from "../../http_functions/functions";
 import { createClient } from "../server";
-//import { http_handleImageUpload } from "../Services/Util";
 
 export const _getUserFromDB = async (userID : string) => {
 
@@ -198,37 +199,35 @@ export const _getCompanyIdFromDB = async () => {
     }
 }
 
-export const _addNewCertificationDB = async (
-    
-    {name, description, hours, company_id, company_name} : iCertificationDB,
-    file: File,
-    ) => {
-        const supabase = await createClient();
+export default async function _addNewCertificationDB(
+    props : iCertificationDB,
+    ){
+    try{
+            const supabase = await createClient();
+        const {data, error : insertError} = await supabase
+                            .from(DBNames.CERTIFICATIONS_DB)
+                            .insert({
+                                ...props,
+                                created_at : new Date().toISOString(),
+                            }).select()
 
-    const {data, error : insertError} = await supabase
-                        .from(DBNames.CERTIFICATIONS_DB)
-                        .insert({
-                            name,
-                            description,
-                            hours: hours,
-                            company_id: company_id,
-                            created_at : new Date().toISOString(),
-                            company_name: company_name
-                        }).select()
-
-    
-    if(data){
-        const form: FormData = new FormData();
-        form.append('image', file);
-        form.append('name', data[0].id);
-        await http_handleImageUpload(form);
-
+        if(insertError){
+            console.log(insertError);
+            throw new Error(insertError.message);
+        }
+        if(data){
+            return {
+                bool : true,
+                id: data[0].id as string
+            }
+        }
+    }catch(e : any){
+        console.log("error", e);
     }
-    if(insertError){
-        throw new Error(insertError.message);
-    }
-
-    return true;
+    return {
+        bool: false,
+        id: null
+    };
         
 }
 
@@ -345,7 +344,6 @@ export const _getCompanyCertificationsFromDB = async () => {
 
 export const _getCompanyApplicationsFromDB = async () => {
     const supabase = await createClient();
-
     const c : string = (await supabase.auth.getUser()).data.user?.user_metadata.company;
 
     const {data, error} = await supabase

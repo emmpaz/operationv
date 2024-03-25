@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import { _declineApplication } from "../../../../utils/supabase/db_calls/API_calls";
+import { _declineApplication } from "../../../utils/supabase/db_calls/actions";
 import { ApplicationModelProps, ModelComponent } from "../../../../helpers/CustomModels";
-import { http_sendEmail } from "../../../../utils/http_functions/functions";
+import { http_sendEmail } from "../../../utils/http_functions/functions";
 
 const DeclineModel: ModelComponent<ApplicationModelProps> = ({
     application_id,

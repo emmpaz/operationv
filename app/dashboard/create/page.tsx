@@ -1,8 +1,8 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { _addNewCertificationDB, _getCompanyIdFromDB } from "../../../utils/supabase/db_calls/API_calls";
-
+import _addNewCertificationDB, { _getCompanyIdFromDB } from "../../utils/supabase/db_calls/actions";
+import { http_handleImageUpload } from "../../utils/http_functions/functions";
 
 
 
@@ -20,20 +20,19 @@ const CreateCertification = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const {id, company} = await _getCompanyIdFromDB();
-        if (await _addNewCertificationDB(
-            {
-                name, 
-                description,
-                hours: hours,
-                company_id: id,
-                company_name: company,
-            },
-            file as File,
-            )) {
-            router.push('/dashboard');
-
+        const form : FormData = new FormData();
+        form.append('image', file);
+        const {bool, id : filename} = await _addNewCertificationDB({
+            name, 
+            description,
+            hours: hours,
+            company_id: id,
+            company_name: company,
+        })
+        if(bool){
+            form.append('name', filename);
+            if(http_handleImageUpload(form)) router.push('/dashboard');
         }
-
     }
 
     const handlePreview = async (e: any) => {
@@ -90,7 +89,7 @@ const CreateCertification = () => {
                             <span className="label-text text-base-100">Name of Certification</span>
                         </div>
                         <input
-                            className="input bg-neutral focus:input-primary input-bordered focus:border-none"
+                            className="input bg-neutral focus:input-primary input-bordered focus:border-none text-base-100"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
@@ -101,7 +100,7 @@ const CreateCertification = () => {
                             <span className="label-text text-base-100">Enter the description</span>
                         </div>
                         <textarea
-                            className="textarea bg-neutral focus:input-primary input-bordered focus:border-none"
+                            className="textarea bg-neutral focus:input-primary input-bordered focus:border-none text-base-100"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             required
@@ -112,7 +111,7 @@ const CreateCertification = () => {
                             <span className="label-text text-base-100">Enter amount of hours needed</span>
                         </div>
                         <input
-                            className="input bg-neutral input-bordered focus:input-primary focus:border-none"
+                            className="input bg-neutral input-bordered focus:input-primary focus:border-none text-base-100"
                             type="number"
                             value={hours}
                             onChange={(e) => setHours(parseInt(e.target.value))}

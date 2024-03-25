@@ -1,7 +1,7 @@
 'use server'
 import { cache } from "react"
-import { iCertificationDB } from "../../helpers/DatabaseTypes"
-import { _getApprovedCertificationsDB, _getCertificationsFromDB, _getPendingCertificationsDB } from "../supabase/db_calls/API_calls"
+import { iCertificationDB } from "../../../helpers/DatabaseTypes"
+import { _getApprovedCertificationsDB, _getCertificationsFromDB, _getPendingCertificationsDB } from "../supabase/db_calls/actions"
 
 export const fetchAllCerts = async (id : string) => {
     const list = await _getCertificationsFromDB(id)

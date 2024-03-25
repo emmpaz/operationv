@@ -1,4 +1,4 @@
-import { _distributeCertificationToUser } from "../../../../utils/supabase/db_calls/API_calls";
+import { _distributeCertificationToUser } from "../../../utils/supabase/db_calls/actions";
 import { ModelComponent, DistributionModelProps } from "../../../../helpers/CustomModels";
 
 const DistributeCertificationModel: ModelComponent<DistributionModelProps> = ({

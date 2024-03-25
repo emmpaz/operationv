@@ -3,9 +3,9 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
-import { _getCompaniesFromDB } from "../../../utils/supabase/db_calls/API_calls";
-import { adminSignIn } from "../../../utils/supabase/user_handling/signInAdmin";
-import { adminSignUp } from "../../../utils/supabase/user_handling/signUpAdmin";
+import { _getCompaniesFromDB } from "../../utils/supabase/db_calls/actions";
+import { adminSignIn } from "../../utils/supabase/user_handling/signInAdmin";
+import { adminSignUp } from "../../utils/supabase/user_handling/signUpAdmin";
 
 interface iCompanyDB {
     name: string,

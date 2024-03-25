@@ -1,4 +1,4 @@
-import { _applyToCertificationDB } from "../../../utils/supabase/db_calls/API_calls";
+import { _applyToCertificationDB } from "../../utils/supabase/db_calls/actions";
 import { useQuery } from "react-query";
 
 

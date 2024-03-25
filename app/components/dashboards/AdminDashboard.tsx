@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
-import { _getCompanyCertificationsFromDB } from "../../../utils/supabase/db_calls/API_calls";
+import { _getCompanyCertificationsFromDB } from "../../utils/supabase/db_calls/actions";
 import { iCertificationDB } from "../../../helpers/DatabaseTypes";
 import { useEffect, useState } from "react";
 import { NavBar } from "../common/navbar";

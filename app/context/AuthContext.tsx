@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useState, useEffect } from "react";
 import { iUserDB } from "../../helpers/DatabaseTypes";
-import { findUserSession } from "../../utils/supabase/user_handling/findUserSession";
+import { findUserSession } from "../utils/supabase/user_handling/findUserSession";
 import { useRouter } from "next/navigation";
 
 interface AuthContextType {
