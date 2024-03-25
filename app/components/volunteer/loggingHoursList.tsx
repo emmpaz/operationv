@@ -26,7 +26,7 @@ const LoggingHoursList = () => {
             pending_cert_name: pending_cert_name
         });
 
-        router.push(`log?${params.toString()}`);
+        router.push(`dashboard/log?${params.toString()}`);
     }
     return (
         <div className="h-full divide-y">
