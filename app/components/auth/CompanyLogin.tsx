@@ -108,7 +108,7 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
                 <div className="w-full max-w-sm">
                     <button
                         onClick={props.resetChoiceHandler}
-                        className="btn btn-sm font-medium mb-4 bg-transparent border border-primary text-primary rounded hover:bg-primary hover:text-base-100"
+                        className="btn btn-ghost font-medium mb-4 bg-transparent text-primary rounded btn-sm"
                     >Go back</button>
                     <h1 className="mb-4 text-4xl text-base-100">Welcome back</h1>
                     <form className="mb-4" onSubmit={handleSignIn}>

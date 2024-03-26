@@ -54,7 +54,7 @@ const LoggingHoursList = () => {
                                 </div>
                                 <div className="flex justify-end items-end mt-2">
                                     <button
-                                        className="btn btn-primary btn-xs"
+                                        className="btn btn-outline text-primary rounded btn-xs"
                                         onClick={() =>
                                             handleNewLog(
                                                 certInfo.Certifications.name,

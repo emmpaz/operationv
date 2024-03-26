@@ -37,11 +37,11 @@ const AdminDashboard = () => {
     }
 
     return (
-        <div className=" flex min-h-screen bg-custom">
+        <div className=" flex bg-custom">
             <div className="w-full flex">
                 <NavBar open={navbar} handleNav={handleNav}/>
-                <div className="w-full flex flex-col">
-                    <div className="flex justify-between w-full p-1">
+                <div className="w-full flex flex-col max-h-screen overflow-y-auto">
+                    <div className="p-10 flex justify-between items-center">
                         <div className="flex-none lg:hidden">
                             <button 
                                 className="btn btn-square btn-ghost hover:text-primary"

@@ -49,21 +49,21 @@ const Certification =
                     <p className="card-title text-base-100">{props.name}</p>
                     <p>{props.company_name}</p>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary rounded">
+                        <button className="btn btn-primary rounded font-medium">
                             View
                         </button>
                         {props.admin &&
-                            (<button className="btn btn-primary rounded">
+                            (<button className="btn btn-primary rounded font-medium">
                                 Edit
                             </button>)
                         }
                         {props.apply && !props.admin &&
-                            (<button className="btn btn-primary rounded" onClick={handleApply}>
+                            (<button className="btn btn-primary rounded font-medium" onClick={handleApply}>
                                 Apply
                             </button>)
                         }
                         {!props.apply && !props.admin &&
-                            (<button className="btn btn-primary rounded" onClick={handleApply} disabled>
+                            (<button className="btn btn-primary rounded font-medium" onClick={handleApply} disabled>
                                 Applied
                             </button>)
                         }

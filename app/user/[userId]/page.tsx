@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 import { useQuery } from "react-query";
 
-import { _getUserCertificationFromDB, _getUserFromDB } from "../../../utils/supabase/db_calls/actions";
+import { _getUserCertificationFromDB, _getUserFromDB } from "../../utils/supabase/db_calls/actions";
 import { iCertificationDB, iUserDB } from "../../../helpers/DatabaseTypes";
 import ProfileCertification from "../../components/common/ProfileCertification";
 

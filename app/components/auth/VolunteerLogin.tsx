@@ -81,7 +81,7 @@ export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
                 <div className="w-full max-w-sm">
                     <button
                         onClick={props.resetChoiceHandler}
-                        className="btn font-medium mb-4 bg-transparent border border-primary text-primary rounded hover:bg-primary hover:text-base-100 btn-sm"
+                        className="btn btn-ghost font-medium mb-4 bg-transparent text-primary rounded btn-sm"
                     >Go back</button>
                     <h1 className="mb-4 text-4xl text-base-100">Welcome back</h1>
                     <div className="flex w-full">
@@ -116,7 +116,7 @@ export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
                         <div className="flex justify-between">
                             <button
                                 type="submit"
-                                className="btn font-medium rounded border-primary bg-primary hover:bg-primary text-base-100"
+                                className="btn font-medium rounded bg-primary text-base-100 hover:bg-primary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary border-none"
                             >
                                 Login
                             </button>

@@ -49,7 +49,7 @@ const LogHours = () => {
                         />
                     </div>
                     <button
-                        className="btn btn-primary mt-4"
+                        className="btn font-medium bg-primary text-base-100 btn-wide rounded hover:bg-primary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary border-none"
                         type="submit"
                     >Log Hours</button>
                 </form>
