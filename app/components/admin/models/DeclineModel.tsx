@@ -9,20 +9,25 @@ const DeclineModel: ModelComponent<ApplicationModelProps> = ({
     application_user_name,
     application_cert,
     application_company,
-    handleOpen
+    handleOpen,
+    handleRefetch
 }) => {
 
     const message_ref = useRef<HTMLTextAreaElement>(null);
 
     const handleDecline = (e: any) => {
         e.preventDefault();
+
         _declineApplication(application_id, (message_ref.current) ? message_ref.current.value : "");
         http_sendEmail(application_cert, 
             application_company, 
             application_user_email, 
             message_ref!.current!.value ?? "",
             'Message from TrueImpact');
+
+
         handleOpen?.(false);
+        handleRefetch();
     }
 
     return (

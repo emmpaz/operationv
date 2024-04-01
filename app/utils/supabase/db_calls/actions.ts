@@ -310,7 +310,7 @@ export const _getApprovedCertificationsDB = async (userID: string) => {
     const list = data.map((res: any) => {
         return {
             ...res,
-            HoursLogging: res.HoursLogging[0]
+            HoursLogging: res.HoursLogging
         }
     });
     return list;

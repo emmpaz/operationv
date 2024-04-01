@@ -9,13 +9,15 @@ const ReviewLogModel : ModelComponent<ReviewHoursModelProps> = ({
     reviewee_user_name,
     reviewee_hours_logged,
     reviewee_log_id,
-    handleOpen
+    handleOpen,
+    handleRefetch,
 }) => {
 
     const handleAccept = async (e : any) => {
         e.preventDefault();
         if(await _acceptLoggedHours(reviewee_log_id, reviewee_hours_logged, reviewee_pendingCert_id)){
             handleOpen?.(false);
+            handleRefetch();
         }
     }
 

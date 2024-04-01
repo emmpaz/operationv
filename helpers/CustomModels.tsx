@@ -4,6 +4,7 @@ import { iUserDB } from "./DatabaseTypes";
 
 export interface ModelComponentProps{
     handleOpen?: (bool : boolean) => void,
+    handleRefetch?: () => void,
 }
 export interface ApplicationModelProps extends ModelComponentProps{
     application_user_name : string,

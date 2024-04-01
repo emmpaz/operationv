@@ -33,15 +33,20 @@ interface iCertificationWithPendingCertsDB {
 
 const FinalReviewList = () => {
 
-    const { data, isLoading } = useQuery('distributionList', () => _getReviewCertificationsFromDB());
+    const { data, isLoading, refetch } = useQuery('distributionList', () => _getReviewCertificationsFromDB());
     const [noReviews, setNoReviews] = useState(true);
     const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<DistributionModelProps>();
+
+    const handleRefetch = () => {
+        refetch();
+    }
 
     const handleDistribution = (props : DistributionModelProps) => {
         showModel(DistributeCertificationModel,
             {
                 ...props,
-                handleOpen: setIsOpen
+                handleOpen: setIsOpen,
+                handleRefetch
             }
         )
     }

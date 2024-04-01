@@ -7,13 +7,15 @@ const DistributeCertificationModel: ModelComponent<DistributionModelProps> = ({
     receiver_user_ID,
     receiver_name,
     receiver_cert_name,
-    handleOpen
+    handleOpen,
+    handleRefetch
 }) => {
 
     const handleDistribute = async (e: any) => {
         e.preventDefault();
         if (await _distributeCertificationToUser(receiver_user_ID, receiver_cert_ID, receiver_pending_ID)) {
             handleOpen?.(false);
+            handleRefetch();
         }
     }
 

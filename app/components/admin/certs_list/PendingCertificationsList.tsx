@@ -35,11 +35,14 @@ interface iCertificationWithPendingCertsDB {
 const PendingCertificationsList = (
  
 ) => {
-    const [pendingCerts, setPendingCerts] = useState<iCertificationWithPendingCertsDB[]>([]);
 
     const {data, isLoading, refetch} = useQuery('pendingList', () =>  _getCompanyApplicationsFromDB());
 
     const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<ApplicationModelProps>();
+
+    const handleRefetch = () =>{
+        refetch();
+    }
 
     const handleModel = (
         model: ModelComponent<ApplicationModelProps>,
@@ -47,7 +50,8 @@ const PendingCertificationsList = (
     ) => {
         showModel(model, {
             ...props,
-            handleOpen: setIsOpen
+            handleOpen: setIsOpen,
+            handleRefetch
         }
         )
     }

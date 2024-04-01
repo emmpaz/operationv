@@ -16,24 +16,22 @@ interface FlattenedPendingCert extends iPendingCertificationDB {
 }
 
 const ReviewHoursList = () => {
-    const [reviewList, setReviewList] = useState<FlattenedHoursLogged[]>([]);
 
-    const { data, isLoading } = useQuery('reviewList', () => _getReviewHourLogs());
+    const { data, isLoading, refetch } = useQuery('reviewList', () => _getReviewHourLogs());
 
     const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<ReviewHoursModelProps>();
 
-    useEffect(() => {
-        if (data) {
-            setReviewList(data);
-        }
-    }, [data])
+    const handleRefetch = () => {
+        refetch();
+    }
 
     const handleReview = (props : ReviewHoursModelProps) => {
         showModel(
             ReviewLogModel,
             {
                 ...props,
-                handleOpen: setIsOpen
+                handleOpen: setIsOpen,
+                handleRefetch
             }
         )
     }
@@ -47,7 +45,7 @@ const ReviewHoursList = () => {
 
             <div className="h-full divide-y">
                 {isOpen && ModelComponent && <ModelComponent {...modelProps as ReviewHoursModelProps} />}
-                {(data.length > 1) ?
+                {(data.length > 0) ?
                     data.map((hourLogged: FlattenedHoursLogged, i) => {
                         return (
                             <div key={i} className="px-5 py-2 flex justify-between hover:bg-accent cursor-pointer"

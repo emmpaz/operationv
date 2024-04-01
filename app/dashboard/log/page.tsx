@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { _addNewHourLog } from "../../utils/supabase/db_calls/actions";
+import { LoggingParamNames } from "../../../helpers/Enums";
 
 const LogHours = () => {
     const router = useRouter();
@@ -14,7 +15,9 @@ const LogHours = () => {
     const handleNewLog = async (e: any) => {
         e.preventDefault();
         if (descriptionRef.current && hoursRef.current) {
-            if (await _addNewHourLog(descriptionRef.current.value, parseInt(hoursRef.current.value), searchParams.get('pendingCert_ID') as string)) {
+            if (await _addNewHourLog(descriptionRef.current.value, 
+                parseInt(hoursRef.current.value), 
+                searchParams.get(LoggingParamNames.PENDING_ID))) {
                 router.push('/');
             }
         }

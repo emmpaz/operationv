@@ -10,7 +10,8 @@ const AcceptModel: ModelComponent<ApplicationModelProps> = ({
    application_user_name,
    application_cert,
    application_company,
-   handleOpen
+   handleOpen,
+   handleRefetch
 }) => {
 
     const body : string = `You have been accepted to <strong>${application_cert}</strong> from ${application_company}. You can now start logging hours`;
@@ -25,6 +26,7 @@ const AcceptModel: ModelComponent<ApplicationModelProps> = ({
             body,
             'Congrats you got accepted (TrueImpact)');
         handleOpen?.(false);
+        handleRefetch();
     }
 
     return(

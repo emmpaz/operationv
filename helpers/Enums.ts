@@ -13,3 +13,8 @@ export enum DBNames{
     USER_CERTIFICATIONS_DB = "UserCertifications",
     USERS_DB = "Users"
 }
+
+export enum LoggingParamNames{
+    PENDING_ID = 'pending_id',
+    
+}

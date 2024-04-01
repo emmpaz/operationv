@@ -20,10 +20,10 @@ const LoggingHoursList = () => {
     const router = useRouter();
     const { data: approvedCerts, isLoading } = useQuery('approvedCerts', () => fetchApprovedCerts(user.id));
 
-    const handleNewLog = (cert_name: string, pending_cert_name: string) => {
+    const handleNewLog = (cert_name: string, pending_id: string) => {
         const params = new URLSearchParams({
             cert_name: cert_name,
-            pending_cert_name: pending_cert_name
+            pending_id : pending_id
         });
 
         router.push(`dashboard/log?${params.toString()}`);
@@ -36,6 +36,7 @@ const LoggingHoursList = () => {
                 </div>
                 :
                 approvedCerts.map((certInfo: FlattenedPendingCert) => {
+                    console.log(approvedCerts);
                     const progress = closetTailWindSize(certInfo.hours_completed / certInfo.hours_required);
                     return (
                         <div className="flex py-5 w-full justify-between" key={certInfo.id}>
