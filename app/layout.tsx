@@ -1,7 +1,7 @@
 import { AuthProvider } from "./context/AuthContext";
 import '../styles/global.css';
-import { AuthPrivateRoutes } from "./private_handling/PrivateRoutes";
 import ReactQueryProvider from "./context/ReactQueryProvider";
+
 export const metadata = {
   title: 'TrueImpact',
   description: 'A volunteering certification system',
