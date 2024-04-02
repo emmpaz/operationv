@@ -12,13 +12,19 @@ import { closetTailWindSize } from "../../../helpers/MathHelpers";
 
 interface FlattenedPendingCert extends iPendingCertificationDB {
     Certifications: iCertificationDB,
-    HoursLogging: iHoursLoggingDB | undefined
+    HoursLogging: iHoursLoggingDB | undefined,
+    reviewNeeded: boolean,
 }
 
 const LoggingHoursList = () => {
     const { user } = useContext(AuthContext)!;
     const router = useRouter();
-    const { data: approvedCerts, isLoading } = useQuery('approvedCerts', () => fetchApprovedCerts(user.id));
+    const { data, isLoading } = useQuery('approvedCerts', 
+        () => fetchApprovedCerts(user.id), 
+        {
+            refetchOnMount: "always"
+        }
+    );
 
     const handleNewLog = (cert_name: string, pending_id: string) => {
         const params = new URLSearchParams({
@@ -35,15 +41,14 @@ const LoggingHoursList = () => {
                     <span className="loading loading-dots loading-lg bg-primary"></span>
                 </div>
                 :
-                approvedCerts.map((certInfo: FlattenedPendingCert) => {
-                    console.log(approvedCerts);
+                data.map((certInfo: FlattenedPendingCert) => {
                     const progress = closetTailWindSize(certInfo.hours_completed / certInfo.hours_required);
                     return (
                         <div className="flex py-5 w-full justify-between" key={certInfo.id}>
                             <div className="flex flex-col pl-2">
                                 <p className="text-base-100">{certInfo.Certifications.name}</p>
                                 <p className="text-sm">{certInfo.Certifications.company_name}</p>
-                                {certInfo.HoursLogging && certInfo.HoursLogging.review_hours && <span className="badge badge-sm badge-secondary mt-2">Reviews needed</span>}
+                                {certInfo.HoursLogging && certInfo.reviewNeeded && <span className="badge badge-sm badge-secondary mt-2">Reviews needed</span>}
                             </div>
                             <div className="pr-2">
                                 <div>

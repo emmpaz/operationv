@@ -28,10 +28,10 @@ const AdminCertification =
                     <h2 className="card-title text-base-100">{props.user_name}</h2>
                     <p className="text-primary">{props.cert_name}</p>
                     <p className="text-sm">{props.user_email}</p>
-                    <p className="text-sm">Requested: {props.requested_at.slice(0, 10)}</p>
+                    <p className="text-sm">Applied: {props.requested_at.slice(0, 10)}</p>
                     <div className="card-actions justify-end">
                         <button 
-                            className="btn btn-primary rounded btn-xs"
+                            className="btn btn-primary rounded btn-xs font-medium"
                             onClick={() => 
                                 props.handleApplication(AcceptModel, 
                                     {
@@ -46,7 +46,7 @@ const AdminCertification =
                             Accept
                         </button>
                         <button 
-                            className="btn btn-neutral rounded btn-xs"
+                            className="btn btn-neutral rounded btn-xs font-medium"
                             onClick={() => 
                                 props.handleApplication(DeclineModel, 
                                     {

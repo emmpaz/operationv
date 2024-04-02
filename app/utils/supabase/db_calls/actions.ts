@@ -1,5 +1,5 @@
 'use server'
-import { iCertificationDB, iPendingCertificationDB, iUserDB } from "../../../../helpers/DatabaseTypes";
+import { iCertificationDB, iHoursLoggingDB, iPendingCertificationDB, iUserDB } from "../../../../helpers/DatabaseTypes";
 import { CertificationStatus, DBNames } from "../../../../helpers/Enums";
 
 
@@ -302,17 +302,18 @@ export const _getApprovedCertificationsDB = async (userID: string) => {
                     .eq('user_id', userID);
     if(error){
         console.log(error.message);
-        return []
+        return [];
     }
-    if(!data){
-        return []
-    }
-    const list = data.map((res: any) => {
+    if(!data) 
+        return [];
+
+    const list = data.map((pendingCert: any) => {
+        const reviewNeeded : boolean = pendingCert.HoursLogging.some((entry : iHoursLoggingDB) => entry.review_hours);
         return {
-            ...res,
-            HoursLogging: res.HoursLogging
+            ...pendingCert,
+            reviewNeeded: reviewNeeded
         }
-    });
+    })
     return list;
 }
 
