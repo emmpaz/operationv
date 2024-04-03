@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import _addNewCertificationDB, { _getCompanyIdFromDB } from "../../utils/supabase/db_calls/actions";
-import { http_handleImageUpload } from "../../utils/http_functions/functions";
+import { http_handleImageUpload } from "../../utils/http/functions";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 

@@ -1,6 +1,7 @@
 import { _applyToCertificationDB } from "../../utils/supabase/db_calls/actions";
 import { useQuery } from "react-query";
 import { LoadingSpinner } from "./LoadingSpinner";
+import Image from "next/image";
 
 
 
@@ -39,11 +40,16 @@ const Certification =
         }
 
         return (
-            <div className="card card-compact w-full bg-neutral rounded shadow-lg">
+            <div className="card card-compact w-full bg-neutral rounded shadow-lg relative">
                 {isLoading ?
                     <LoadingSpinner/>
                     :
-                    <figure><img src={data} alt="Shoes" /></figure>}
+                    <figure className="relative w-full">
+                        <div className="absolute inset-0 overflow-hidden">
+                            <Image src={data} alt="cert image" fill objectFit="cover"/>
+                        </div>
+                    </figure>
+                    }
                 <div className="card-body">
                     <p className="card-title text-base-100">{props.name}</p>
                     <p>{props.company_name}</p>
@@ -51,16 +57,19 @@ const Certification =
                         <button className="btn btn-primary rounded font-medium">
                             View
                         </button>
+                        {/**is admin */}
                         {props.admin &&
                             (<button className="btn btn-primary rounded font-medium">
                                 Edit
                             </button>)
                         }
+                        {/**not admin but can still apply */}
                         {props.apply && !props.admin &&
                             (<button className="btn btn-primary rounded font-medium" onClick={handleApply}>
                                 Apply
                             </button>)
                         }
+                        {/**not admin and already applied*/}
                         {!props.apply && !props.admin &&
                             (<button className="btn btn-primary rounded font-medium" onClick={handleApply} disabled>
                                 Applied

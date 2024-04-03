@@ -3,7 +3,7 @@ import { iCertificationDB, iHoursLoggingDB, iPendingCertificationDB, iUserDB } f
 import { CertificationStatus, DBNames } from "../../../../helpers/Enums";
 
 
-import { http_handleImageUpload } from "../../http_functions/functions";
+import { http_handleImageUpload } from "../../http/functions";
 import { createClient } from "../server";
 
 export const _getUserFromDB = async (userID : string) => {

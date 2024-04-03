@@ -193,6 +193,12 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
                                 })}
                             </ul>
                         </div>
+                        <button
+                                className="font-medium btn-link text-xs"
+                                onClick={() => {}}
+                            >
+                                Can't find your company? Register here!
+                            </button>
                     </div>
                     <div className="mb-4">
                         <label
@@ -223,7 +229,7 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
                     </div>
                     <div className="flex justify-between">
                         <button
-                            className="btn font-medium rounded border-primary bg-primary hover:bg-primary text-base-100"
+                            className="btn btn-primary font-medium text-base-100 rounded hover:bg-primary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary border-none"
                             onClick={handleSignUp}
                         >
                             Sign Up

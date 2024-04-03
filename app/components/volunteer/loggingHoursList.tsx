@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { iCertificationDB, iHoursLoggingDB, iPendingCertificationDB } from "../../../helpers/DatabaseTypes";
 import { AuthContext } from "../../context/AuthContext";
 import { useQuery } from "react-query";
-import { fetchApprovedCerts } from "../../utils/fetch_queries/queries";
+import { fetchApprovedCerts } from "../../utils/queries/queries";
 import { useRouter } from "next/navigation";
 import { closetTailWindSize } from "../../../helpers/MathHelpers";
 import { LoadingSpinner } from "../common/LoadingSpinner";

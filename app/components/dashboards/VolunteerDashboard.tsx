@@ -4,7 +4,7 @@ import { use, useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { iCertificationDB } from "../../../helpers/DatabaseTypes";
 import { useQuery, useQueryClient } from "react-query";
-import { fetchAllCerts, fetchPendingCerts } from "../../utils/fetch_queries/queries";
+import { fetchAllCerts, fetchPendingCerts } from "../../utils/queries/queries";
 import { NavBar } from "../common/navbar";
 import Certification from "../common/certification";
 import LoggingHoursList from "../volunteer/loggingHoursList";
