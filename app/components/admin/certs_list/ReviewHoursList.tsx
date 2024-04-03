@@ -4,6 +4,7 @@ import { iCertificationDB, iHoursLoggingDB, iPendingCertificationDB, iUserDB } f
 import { ModelComponent, ReviewHoursModelProps, useModel } from "../../../../helpers/CustomModels";
 import ReviewLogModel from "../models/ReviewLogModel";
 import { useQuery } from "react-query";
+import { LoadingSpinner } from "../../common/LoadingSpinner";
 
 interface FlattenedHoursLogged extends iHoursLoggingDB {
     PendingCertifications: FlattenedPendingCert,
@@ -17,9 +18,9 @@ interface FlattenedPendingCert extends iPendingCertificationDB {
 
 const ReviewHoursList = () => {
 
-    const { data, isLoading, refetch } = useQuery('reviewList', () => _getReviewHourLogs());
+    const { data, isLoading, refetch } = useQuery<FlattenedHoursLogged[]>('reviewList', () => _getReviewHourLogs());
 
-    const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<ReviewHoursModelProps>();
+    const { showModel, isVisible, ModelComponent, modelProps, handleVisibility } = useModel<ReviewHoursModelProps>();
 
     const handleRefetch = () => {
         refetch();
@@ -30,7 +31,7 @@ const ReviewHoursList = () => {
             ReviewLogModel,
             {
                 ...props,
-                handleOpen: setIsOpen,
+                handleOpen: handleVisibility,
                 handleRefetch
             }
         )
@@ -38,13 +39,11 @@ const ReviewHoursList = () => {
 
     return (
         isLoading ?
-            <div className="w-full h-full flex items-center justify-center">
-                <span className="loading loading-dots loading-lg bg-primary"></span>
-            </div>
+            <LoadingSpinner/>
             :
-
+            
             <div className="h-full divide-y">
-                {isOpen && ModelComponent && <ModelComponent {...modelProps as ReviewHoursModelProps} />}
+                {isVisible && ModelComponent && <ModelComponent {...modelProps as ReviewHoursModelProps} />}
                 {(data.length > 0) ?
                     data.map((hourLogged: FlattenedHoursLogged, i) => {
                         return (

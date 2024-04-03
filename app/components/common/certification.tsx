@@ -1,5 +1,6 @@
 import { _applyToCertificationDB } from "../../utils/supabase/db_calls/actions";
 import { useQuery } from "react-query";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 
 
@@ -40,9 +41,7 @@ const Certification =
         return (
             <div className="card card-compact w-full bg-neutral rounded shadow-lg">
                 {isLoading ?
-                    <div className="w-full h-full flex items-center justify-center">
-                        <span className="loading loading-dots loading-lg bg-primary"></span>
-                    </div>
+                    <LoadingSpinner/>
                     :
                     <figure><img src={data} alt="Shoes" /></figure>}
                 <div className="card-body">

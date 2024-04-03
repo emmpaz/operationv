@@ -2,10 +2,10 @@ import { useQuery } from "react-query";
 import { _getReviewCertificationsFromDB } from "../../../utils/supabase/db_calls/actions";
 import { CertificationStatus } from "../../../../helpers/Enums";
 import { iUserDB } from "../../../../helpers/DatabaseTypes";
-import { useEffect, useState } from "react";
-import { ApplicationModelProps, DistributionModelProps, ModelComponent, ReviewHoursModelProps, useModel } from "../../../../helpers/CustomModels";
-import ReviewLogModel from "../models/ReviewLogModel";
+import { useState } from "react";
+import { DistributionModelProps, useModel } from "../../../../helpers/CustomModels";
 import DistributeCertificationModel from "../models/DistributeCertificationModel";
+import { LoadingSpinner } from "../../common/LoadingSpinner";
 
 interface iPendingCertificationAdminDB {
     id: string,
@@ -30,12 +30,22 @@ interface iCertificationWithPendingCertsDB {
     company_name: string
     PendingCertifications: iPendingCertificationAdminDB[]
 }
-
+/**
+ * this list is displaying certifications that are ready to be distributed
+ * to the volunteers that have completed the required hours.
+ * @returns 
+ */
 const FinalReviewList = () => {
 
-    const { data, isLoading, refetch } = useQuery('distributionList', () => _getReviewCertificationsFromDB());
+    const { data, isLoading, refetch } = useQuery<iCertificationWithPendingCertsDB[]>('distributionList', () => _getReviewCertificationsFromDB());
     const [noReviews, setNoReviews] = useState(true);
-    const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<DistributionModelProps>();
+    
+    const { 
+        showModel, 
+        isVisible, 
+        ModelComponent, 
+        modelProps, 
+        handleVisibility } = useModel<DistributionModelProps>();
 
     const handleRefetch = () => {
         refetch();
@@ -45,7 +55,7 @@ const FinalReviewList = () => {
         showModel(DistributeCertificationModel,
             {
                 ...props,
-                handleOpen: setIsOpen,
+                handleOpen: handleVisibility,
                 handleRefetch
             }
         )
@@ -54,13 +64,11 @@ const FinalReviewList = () => {
 
     return (
         isLoading ?
-            <div className="w-full h-full flex items-center justify-center">
-                <span className="loading loading-dots loading-lg bg-primary"></span>
-            </div>
+            <LoadingSpinner/>
             :
 
             <div className="h-full divide-y">
-                {isOpen && ModelComponent && <ModelComponent {...modelProps as DistributionModelProps} />}
+                {isVisible && ModelComponent && <ModelComponent {...modelProps as DistributionModelProps} />}
                 {data?.map((cert: iCertificationWithPendingCertsDB) => {
                         return (
                             cert.PendingCertifications.map((pc: iPendingCertificationAdminDB, i) => {
@@ -78,12 +86,12 @@ const FinalReviewList = () => {
                                             }
                                         )}>
                                         <div className="flex justify-end flex-col">
-                                            <p className="text-base-100 text-3xl">{pc.Users.name}</p>
-                                            <p className="text-base-100">{pc.Users.email}</p>
+                                            <p className="text-base-100 text-3xl">{pc.Users?.name ?? 'Unknown name'}</p>
+                                            <p className="text-base-100">{pc.Users?.email ?? 'Unknown email'}</p>
                                         </div>
                                         <div className="flex flex-col items-end">
                                             <p>
-                                                <span className="text-lg text-primary mr-1">{cert.name}</span>
+                                                <span className="text-lg text-primary mr-1">{cert.name ?? 'Unknown certification name'}</span>
                                             </p>
                                         </div>
                                     </div>

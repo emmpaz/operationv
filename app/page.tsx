@@ -5,6 +5,7 @@ import { AuthContext } from "./context/AuthContext"
 import { VolunteerLogin } from "./components/auth/VolunteerLogin";
 import { CompanyLogin } from './components/auth/CompanyLogin';
 import { redirect, useRouter } from "next/navigation";
+import { LoadingSpinner } from "./components/common/LoadingSpinner";
 
 export default function Page() {
     const { user } = useContext(AuthContext)!;
@@ -30,9 +31,7 @@ export default function Page() {
 
     return (
         loading ?
-            <div className="w-full h-screen flex items-center justify-center">
-                <span className="loading loading-dots loading-lg bg-primary"></span>
-            </div>
+            <LoadingSpinner/>
             :
 
             <div className=" w-screen h-screen flex items-center flex-col">

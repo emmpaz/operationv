@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import _addNewCertificationDB, { _getCompanyIdFromDB } from "../../utils/supabase/db_calls/actions";
 import { http_handleImageUpload } from "../../utils/http_functions/functions";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 
 
@@ -64,9 +65,7 @@ const CreateCertification = () => {
                         </div>
                     </div>
                     :
-                    <div className="w-full h-full flex items-center justify-center">
-                        <span className="loading loading-dots loading-lg bg-primary"></span>
-                    </div>
+                    <LoadingSpinner/>
                 }
 
             </div>

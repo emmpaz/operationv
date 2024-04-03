@@ -8,6 +8,7 @@ import { fetchAllCerts, fetchPendingCerts } from "../../utils/fetch_queries/quer
 import { NavBar } from "../common/navbar";
 import Certification from "../common/certification";
 import LoggingHoursList from "../volunteer/loggingHoursList";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 
 export const VolunteerDashboard = () => {
@@ -62,9 +63,7 @@ export const VolunteerDashboard = () => {
                                 <h2 className="text-base-100 text-xl py-5">Pending Opportunities</h2>
                                 <div className="self-center max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {LoadingPendingCerts ?
-                                        <div className="w-full h-screen flex items-center justify-center">
-                                            <span className="loading loading-dots loading-lg bg-primary"></span>
-                                        </div>
+                                        <LoadingSpinner/>
                                         :
                                         pendingCerts.map((cert, i) => {
                                             return (
@@ -90,9 +89,7 @@ export const VolunteerDashboard = () => {
                                 <h2 className="text-base-100 text-xl py-5">Find Opportunities</h2>
                                 <div className="self-center max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {LoadingAvailableCerts ?
-                                        <div className="w-full h-screen flex items-center justify-center">
-                                            <span className="loading loading-dots loading-lg bg-primary"></span>
-                                        </div>
+                                        <LoadingSpinner/>
                                         :
                                         availableCerts.map((cert, i) => {
                                             return (

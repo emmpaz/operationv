@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
+
 import { _getCompanyApplicationsFromDB } from "../../../utils/supabase/db_calls/actions";
 import { iUserDB } from "../../../../helpers/DatabaseTypes";
 import { CertificationStatus } from "../../../../helpers/Enums";
 import AdminCertification from "../certification_models/AdminCertification";
-import DeclineModel from "../models/DeclineModel";
 import { ModelComponent, ApplicationModelProps, useModel } from "../../../../helpers/CustomModels";
 import { useQuery } from "react-query";
+import { LoadingSpinner } from "../../common/LoadingSpinner";
 
 
 interface iPendingCertificationAdminDB {
@@ -31,14 +31,16 @@ interface iCertificationWithPendingCertsDB {
     company_name: string
     PendingCertifications: iPendingCertificationAdminDB[]
 }
+/**
+ * this is the list of certifications that displays all the
+ * applications
+ * @returns the list of certifications that applicants applied for
+ */
+const PendingCertificationsList = () => {
 
-const PendingCertificationsList = (
- 
-) => {
+    const {data, isLoading, refetch} = useQuery<iCertificationWithPendingCertsDB[]>('pendingList', () =>  _getCompanyApplicationsFromDB());
 
-    const {data, isLoading, refetch} = useQuery('pendingList', () =>  _getCompanyApplicationsFromDB());
-
-    const { showModel, isOpen, ModelComponent, modelProps, setIsOpen } = useModel<ApplicationModelProps>();
+    const { showModel, isVisible, ModelComponent, modelProps, handleVisibility } = useModel<ApplicationModelProps>();
 
     const handleRefetch = () =>{
         refetch();
@@ -50,7 +52,7 @@ const PendingCertificationsList = (
     ) => {
         showModel(model, {
             ...props,
-            handleOpen: setIsOpen,
+            handleOpen: handleVisibility,
             handleRefetch
         }
         )
@@ -59,13 +61,11 @@ const PendingCertificationsList = (
 
     return (
         isLoading ?
-            <div className="w-full h-full flex items-center justify-center">
-                <span className="loading loading-dots loading-lg bg-primary"></span>
-            </div>
+            <LoadingSpinner/>
             :
             
             <div className="self-center max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {isOpen && ModelComponent && <ModelComponent {...modelProps as ApplicationModelProps} />}
+                {isVisible && ModelComponent && <ModelComponent {...modelProps as ApplicationModelProps} />}
                 { data.length > 0 ?
                     data.map((cert: iCertificationWithPendingCertsDB) => {
                         return (
@@ -88,7 +88,7 @@ const PendingCertificationsList = (
                     })
                     :
                     <div className="h-full flex justify-center items-center">
-                    <p>Currently there are no distributions needed :)</p>
+                        <p>Currently there are no applications :)</p>
                     </div>
                 }
             </div>

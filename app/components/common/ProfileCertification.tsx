@@ -1,5 +1,6 @@
 
 import { useQuery } from "react-query";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 
 
@@ -27,9 +28,7 @@ const ProfileCertification =
         return (
             <div className="card card-compact w-full bg-neutral rounded shadow-lg">
                 {isLoading ?
-                    <div className="w-full h-full flex items-center justify-center">
-                        <span className="loading loading-dots loading-lg bg-primary"></span>
-                    </div>
+                    <LoadingSpinner/>
                     :
                     <>
                         <figure><img className="rounded" src={data} alt={props.name} /></figure>

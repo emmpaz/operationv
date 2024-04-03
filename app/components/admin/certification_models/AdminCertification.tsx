@@ -1,12 +1,16 @@
-import { ModelComponent, ApplicationModelProps, useModel } from "../../../../helpers/CustomModels";
-import { iUserDB } from "../../../../helpers/DatabaseTypes";
+import { ModelComponent, ApplicationModelProps } from "../../../../helpers/CustomModels";
 import AcceptModel from "../models/AcceptModel";
 import DeclineModel from "../models/DeclineModel";
 
 
 
 
-
+/**
+ * this is a custom view of a certification from the perspective of the admin.
+ * this certification will be shown on the admins view as a application for a certification.
+ * @param props some information that is needed to accept or decline the application
+ * @returns a certification component
+ */
 const AdminCertification =
 (props:
     {

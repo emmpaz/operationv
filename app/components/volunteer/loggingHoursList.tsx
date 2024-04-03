@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { fetchApprovedCerts } from "../../utils/fetch_queries/queries";
 import { useRouter } from "next/navigation";
 import { closetTailWindSize } from "../../../helpers/MathHelpers";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 
 
@@ -37,9 +38,7 @@ const LoggingHoursList = () => {
     return (
         <div className="h-full divide-y">
             {isLoading ?
-                <div className="w-full h-screen flex items-center justify-center">
-                    <span className="loading loading-dots loading-lg bg-primary"></span>
-                </div>
+                <LoadingSpinner/>
                 :
                 data.map((certInfo: FlattenedPendingCert) => {
                     const progress = closetTailWindSize(certInfo.hours_completed / certInfo.hours_required);

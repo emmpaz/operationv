@@ -8,6 +8,7 @@ import ReviewHoursList from "../admin/certs_list/ReviewHoursList";
 import FinalReviewList from "../admin/certs_list/FinalReviewList";
 import PendingCertificationsList from "../admin/certs_list/PendingCertificationsList";
 import Certification from "../common/certification";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 
 
@@ -80,9 +81,7 @@ const AdminDashboard = () => {
                             <div className="w-full flex flex-col">
                                 <h2 className="text-base-100 text-xl py-5">All Active Certifications</h2>
                                 {isLoading ?
-                                    <div className="w-full h-full flex items-center justify-center">
-                                        <span className="loading loading-dots loading-lg bg-primary"></span>
-                                    </div>
+                                    <LoadingSpinner/>
                                     :
                                     <div className="self-center max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         {activeCerts.map((cert, i) => {
