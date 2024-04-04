@@ -33,7 +33,12 @@ export default function Page() {
             description.current.value,
             typeOfWork.current.value, gRecaptchaToken);
             
-        if(res) router.push("/");
+        if(res) {
+            alert('Company was sent to the registrar! You should receive an email once you company was approved!');
+            router.push("/");
+        }else{
+            alert('Error');
+        };
 
     }
 

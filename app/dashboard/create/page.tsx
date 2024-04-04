@@ -4,6 +4,7 @@ import { useState } from "react";
 import _addNewCertificationDB, { _getCompanyIdFromDB } from "../../utils/supabase/db_calls/actions";
 import { http_handleImageUpload } from "../../utils/http/functions";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import Link from "next/link";
 
 
 
@@ -46,12 +47,12 @@ const CreateCertification = () => {
 
     return (
         <div className="w-screen">
-            <button
+            <Link
                 className="btn btn-primary m-4"
-                onClick={() => router.push('/dashboard')}
+                href="/dashboard"
             >
                 Back
-            </button>
+            </Link>
             <div className="w-full flex justify-center">
                 {(name && imagePreview) ?
                     <div className="w-96">

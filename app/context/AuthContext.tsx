@@ -17,27 +17,30 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<iUserDB | null>(null);
-    const router = useRouter();
     const [loading, setLoading] = useState(true);
 
     const userHandler = (user: iUserDB | null) => setUser(user);
 
     useEffect(() => {
         const fetchUser = async () => {
-            const userData = await findUserSession();
-            setUser(userData);
+            //
+            setUser(null);
             setLoading(false);
         }
         fetchUser();
     }, [])
 
+    if(loading){
+        return(
+            <div className="w-full h-screen flex items-center justify-center">
+                    <span className="loading loading-dots loading-lg bg-primary"></span>
+            </div>
+        )
+    }
+
     return (
         <AuthContext.Provider value={{ user, userHandler }}>
-            {loading ?
-                <div className="w-full h-screen flex items-center justify-center">
-                    <span className="loading loading-dots loading-lg bg-primary"></span>
-                </div>
-                : children}
+            {children}
         </AuthContext.Provider>
     )
 }

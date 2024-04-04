@@ -9,6 +9,7 @@ import FinalReviewList from "../admin/certs_list/FinalReviewList";
 import PendingCertificationsList from "../admin/certs_list/PendingCertificationsList";
 import Certification from "../common/certification";
 import { LoadingSpinner } from "../common/LoadingSpinner";
+import Link from "next/link";
 
 
 
@@ -54,10 +55,10 @@ const AdminDashboard = () => {
                         <div className="p-10 w-fit ">
                             <h1 className="text-4xl text-primary">Welcome admin</h1>
                         </div>
-                        <button
+                        <Link
                             className="btn btn-primary"
-                            onClick={() => router.push('/dashboard/create')}
-                        >New Certification</button>
+                            href="/dashboard/create"
+                        >New Certification</Link>
                     </div>
                     <div className="flex flex-col md:flex-row w-full p-1 h-80">
                         <div className="w-full lg:w-1/2 bg-neutral md:m-1 rounded shadow-lg overflow-y-auto min-h-10">

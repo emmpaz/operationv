@@ -5,6 +5,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { signOut } from "../../utils/supabase/user_handling/signOutUser";
 import image from './test.png';
+import Link from "next/link";
 
 export const NavBar = (
     props: {
@@ -85,10 +86,10 @@ export const NavBar = (
                             </li>
                         </ul>
                         <div className="flex-grow"></div>
-                        <button
+                        <Link
                             className="btn btn-primary m-4 rounded hover:bg-primary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary border-none"
-                            onClick={() => router.push('/')}
-                        >Sign in/Sign up</button>
+                            href="/"
+                        >Sign in/Sign up</Link>
                     </div>
                 }
             </div>
@@ -146,10 +147,10 @@ export const NavBar = (
                                     </li>
                                 </ul>
                                 <div className="flex-grow"></div>
-                                <button
+                                <Link
                                     className="btn btn-primary m-4 rounded hover:bg-primary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary border-none"
-                                    onClick={() => router.push('/')}
-                                >Sign in/Sign up</button>
+                                    href="/"
+                                >Sign in/Sign up</Link>
                             </div>
                         }
                     </div>

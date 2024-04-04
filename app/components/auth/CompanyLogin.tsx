@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { _getCompaniesFromDB } from "../../utils/supabase/db_calls/actions";
 import { adminSignIn } from "../../utils/supabase/user_handling/signInAdmin";
 import { adminSignUp } from "../../utils/supabase/user_handling/signUpAdmin";
+import Link from "next/link";
 
 interface iCompanyDB {
     name: string,
@@ -13,7 +14,7 @@ interface iCompanyDB {
     is_verified: boolean
 }
 
-export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
+export const CompanyLogin = (props: {resetChoiceHandler: () => void}) => {
 
     const { user, userHandler } = useContext(AuthContext)!;
     const router = useRouter();
@@ -99,6 +100,7 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
             }
         }
     }
+
     if (!signUp) {
         return (
             <div
@@ -160,7 +162,7 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
             <div className="w-full max-w-sm">
                 <button
                     onClick={props.resetChoiceHandler}
-                    className="btn btn-sm font-medium mb-4 bg-transparent border border-primary text-primary rounded hover:bg-primary hover:text-base-100"
+                    className="btn btn-ghost font-medium mb-4 bg-transparent text-primary rounded btn-sm"
                 >Go back</button>
                 <h1 className="mb-4 text-4xl text-base-100">Hey there! </h1>
                 <form className="mb-4">
@@ -183,9 +185,10 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
                                 className="dropdown-content bg-neutral z-[1] p-2 menu rounded shadow w-full mt-2 h-40"
                                 ref={dropdownRef}
                             >
-                                {companyList.map(com => {
+                                {companyList.map((com, i) => {
                                     return (
                                         <li
+                                            key={i}
                                             onClick={() => handleCompanyChoice(com.name)}
                                             className=""
                                         ><a className="text-primary">{com.name}</a></li>
@@ -193,12 +196,12 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
                                 })}
                             </ul>
                         </div>
-                        <button
-                                className="font-medium btn-link text-xs"
-                                onClick={() => {router.push('/register-company')}}
+                        <Link
+                                href="/register"
+                                className="font-medium btn-link text-sm"
                             >
                                 Can't find your company? Register here!
-                            </button>
+                            </Link>
                     </div>
                     <div className="mb-4">
                         <label
