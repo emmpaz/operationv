@@ -195,7 +195,7 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
                         </div>
                         <button
                                 className="font-medium btn-link text-xs"
-                                onClick={() => {}}
+                                onClick={() => {router.push('/register-company')}}
                             >
                                 Can't find your company? Register here!
                             </button>

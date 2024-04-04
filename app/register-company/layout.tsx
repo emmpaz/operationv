@@ -1,9 +1,4 @@
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-
-
-
-
-
+import RecaptchaWrapper from "../context/RecaptchaWrapper"
 
 export default function RootLayout({
     children,
@@ -11,16 +6,9 @@ export default function RootLayout({
     children: React.ReactNode
   }) {
 
-    const reCaptchaKey: string | undefined = process.env.NEXT_PUBLIC_SITE_KEY;
-  
     return (
-      <html lang="en">
-        <body>
-          <GoogleReCaptchaProvider 
-            reCaptchaKey={reCaptchaKey ?? 'NOT DEFINED'}>
+          <RecaptchaWrapper>
             {children}
-          </GoogleReCaptchaProvider>
-        </body>
-      </html>
+          </RecaptchaWrapper>
     )
   }
