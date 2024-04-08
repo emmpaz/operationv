@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Page() {
 
+    const email = useRef(null);
     const companyName = useRef(null);
     const confirmCompanyName = useRef(null);
     const industry = useRef(null);
@@ -20,24 +21,25 @@ export default function Page() {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if(companyName.current.value !== confirmCompanyName.current.value) return;
+        if (companyName.current.value !== confirmCompanyName.current.value) return;
 
         if (!executeRecaptcha) {
             console.error('not available right now');
             return;
         }
         const gRecaptchaToken = await executeRecaptcha('inquirySubmit');
-
-        const res = await _createNewCompany(
-            companyName.current.value, 
+        const {bool, mes} = await _createNewCompany(
+            companyName.current.value,
             description.current.value,
-            typeOfWork.current.value, gRecaptchaToken);
-            
-        if(res) {
-            alert('Company was sent to the registrar! You should receive an email once you company was approved!');
+            typeOfWork.current.value,
+            email.current.value,
+            gRecaptchaToken);
+
+        if (bool) {
+            alert(mes);
             router.push("/");
-        }else{
-            alert('Error');
+        } else {
+            alert(mes);
         };
 
     }
@@ -45,6 +47,16 @@ export default function Page() {
     return (
         <div className="h-screen w-full flex items-center justify-center bg-neutral">
             <form className="flex flex-col w-1/3 min-w-96" onSubmit={handleSubmit}>
+                <div className="mb-4">
+                    <label
+                        className="block mb-2 text-sm font-bold text-gray-700"
+                    >Email</label>
+                    <input
+                        required
+                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-primary focus:shadow-outline text-base-100"
+                        ref={email}
+                    />
+                </div>
                 <div className="mb-4">
                     <label
                         className="block mb-2 text-sm font-bold text-gray-700"

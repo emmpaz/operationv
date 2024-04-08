@@ -5,11 +5,19 @@ import { useRouter } from "next/navigation";
 import { signInUser } from "../../utils/supabase/user_handling/signInUser";
 import { signUpUser } from "../../utils/supabase/user_handling/signUpUser";
 
-type Error = {
+/**
+ * for error handling the sign in process
+ */
+interface Error{
     bool: boolean,
     mes: string
 }
 
+/**
+ * VolunteerLogin component handles the login and registration process for volunteers.
+ * It provides a form for volunteers to sign in or sign up.
+ * @param props - The component props containing the resetChoiceHandler function.
+ */
 export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
     const { userHandler } = useContext(AuthContext)!;
 
@@ -24,7 +32,10 @@ export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
 
     const [invalid, setInvalid] = useState<Error>({ bool: false, mes: "" });
 
-
+    /**
+     * Handles the volunteer sign-in process.
+     * @param e - The form submission event.
+     */
     const handleSignIn = async (e: any) => {
         e.preventDefault();
         if (emailRef.current && passwordRef.current) {
@@ -53,6 +64,10 @@ export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
         }
     }
 
+     /**
+     * Handles the volunteer sign-up process.
+     * @param e - The form submission event.
+     */
     const handleSignUp = async (e: any) => {
         e.preventDefault();
         if (emailRef.current && passwordRef.current && nameRef.current) {
@@ -73,6 +88,7 @@ export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
             }
         }
     }
+    // Render the login form if signup is false
     if (!signup) {
         return (
             <div
@@ -133,6 +149,8 @@ export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
             </div>
         )
     }
+    
+    // Render the sign-up form if signup is true
     return (
         <div
             className="h-screen flex justify-center items-center"

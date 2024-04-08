@@ -1,22 +1,31 @@
 'use client'
 
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
 import { _getCompaniesFromDB } from "../../utils/supabase/db_calls/actions";
 import { adminSignIn } from "../../utils/supabase/user_handling/signInAdmin";
 import { adminSignUp } from "../../utils/supabase/user_handling/signUpAdmin";
 import Link from "next/link";
+import { useQuery } from "react-query";
 
+/**
+ * Interface respresenting a company in the database
+ */
 interface iCompanyDB {
     name: string,
     description: string,
     is_verified: boolean
 }
 
-export const CompanyLogin = (props: {resetChoiceHandler: () => void}) => {
+/**
+ * Login in/ Sign up component for admin login and signup.
+ * @param props - the component props
+ * @returns props.resetChoiceHandler - function to reset the choice
+ */
+export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
 
-    const { user, userHandler } = useContext(AuthContext)!;
+    const { userHandler } = useContext(AuthContext)!;
     const router = useRouter();
 
     const [signUp, setSignUp] = useState(false);
@@ -29,30 +38,25 @@ export const CompanyLogin = (props: {resetChoiceHandler: () => void}) => {
     const passwordRef = useRef<HTMLInputElement>(null);
     const confirm_passwordRef = useRef<HTMLInputElement>(null);
 
+    /**
+     * fetches the list of companies verified
+     */
+    const { data: companyList, isLoading } = useQuery<iCompanyDB[]>('companyList', async () => await _getCompaniesFromDB());
 
-    useEffect(() => {
-        const fetchCompanies = async () => {
-            const list = await _getCompaniesFromDB().then((res) => {
-                return res.map((com: iCompanyDB) => ({
-                    name: com.name,
-                    description: com.description,
-                    is_verified: com.is_verified
-                }))
-            })
-            setCompanyList(list);
-        }
-        fetchCompanies();
-    }, [])
-
-    const [companyList, setCompanyList] = useState<iCompanyDB[]>([])
-
+    /**
+     * handling the selection of a company from the dropdown list
+     * @param com - the selected company name
+     */
     const handleCompanyChoice = (com: string) => {
         setSearch_company(com);
         if (company.current)
             company.current.value = com;
         dropdownRef.current?.blur();
     }
-
+    /**
+     * handles the admin sign-in process
+     * @param e - the form submission event
+     */
     const handleSignIn = async (e: any) => {
         e.preventDefault();
         if (emailRef.current && passwordRef.current) {
@@ -76,21 +80,21 @@ export const CompanyLogin = (props: {resetChoiceHandler: () => void}) => {
         }
     }
 
-
+    /**
+     * handles the admin sign-up process
+     * @param e - the form submission event
+     */
     const handleSignUp = async (e: any) => {
         e.preventDefault();
         if (emailRef.current && passwordRef.current && confirm_passwordRef.current) {
             const email = emailRef.current.value;
             const password = passwordRef.current.value;
             const cPassword = confirm_passwordRef.current.value;
-            if (email === "" || password === "" || cPassword === "") {
-                return
-            }
-            if (password !== cPassword) {
-                return
-            }
+            if (email === "" || password === "" || cPassword === "") return;
 
-            const response = await adminSignUp({ email: email, password: password});
+            if (password !== cPassword) return;
+
+            const response = await adminSignUp({ email: email, password: password });
 
             if (response) {
                 localStorage.setItem('name', "");
@@ -100,7 +104,7 @@ export const CompanyLogin = (props: {resetChoiceHandler: () => void}) => {
             }
         }
     }
-
+    //render the login form if signUp state is false
     if (!signUp) {
         return (
             <div
@@ -155,6 +159,7 @@ export const CompanyLogin = (props: {resetChoiceHandler: () => void}) => {
             </div>
         )
     }
+    //render the sign up form
     return (
         <div
             className="h-screen flex justify-center items-center"
@@ -170,38 +175,44 @@ export const CompanyLogin = (props: {resetChoiceHandler: () => void}) => {
                         <label
                             className="block mb-2 text-sm font-bold text-gray-700"
                         >Company</label>
-                        <div className="dropdown w-full">
-                            <div className="relative w-full">
-                                <input
-                                    type="text"
-                                    className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-primary focus:shadow-outline text-base-100"
-                                    placeholder="Search for a company"
-                                    ref={company}
-                                />
+                        {isLoading ?
+                            <div>
                             </div>
-                            <ul
-                                tabIndex={0}
-                                id="companies-list"
-                                className="dropdown-content bg-neutral z-[1] p-2 menu rounded shadow w-full mt-2 h-40"
-                                ref={dropdownRef}
-                            >
-                                {companyList.map((com, i) => {
-                                    return (
-                                        <li
-                                            key={i}
-                                            onClick={() => handleCompanyChoice(com.name)}
-                                            className=""
-                                        ><a className="text-primary">{com.name}</a></li>
-                                    )
-                                })}
-                            </ul>
-                        </div>
+                            :
+                            
+                            <div className="dropdown w-full">
+                                <div className="relative w-full">
+                                    <input
+                                        type="text"
+                                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-primary focus:shadow-outline text-base-100"
+                                        placeholder="Search for a company"
+                                        ref={company}
+                                    />
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    id="companies-list"
+                                    className="dropdown-content bg-neutral z-[1] p-2 menu rounded shadow w-full mt-2 h-40"
+                                    ref={dropdownRef}
+                                >
+                                    {companyList.map((com, i) => {
+                                        return (
+                                            <li
+                                                key={i}
+                                                onClick={() => handleCompanyChoice(com.name)}
+                                                className=""
+                                            ><a className="text-primary">{com.name}</a></li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
+                        }
                         <Link
-                                href="/register"
-                                className="font-medium btn-link text-sm"
-                            >
-                                Can't find your company? Register here!
-                            </Link>
+                            href="/register"
+                            className="font-medium btn-link text-sm"
+                        >
+                            Can't find your company? Register here!
+                        </Link>
                     </div>
                     <div className="mb-4">
                         <label

@@ -3,7 +3,12 @@
 import { DBNames } from "../../../../helpers/Enums";
 import { createClient } from "../server";
 
-export const _createNewCompany = async (name: string, descriptions: string, volunteer_work: string, token : string) => {
+export const _createNewCompany = async (
+    name: string, 
+    descriptions: string, 
+    volunteer_work: string,
+    email: string, 
+    token : string) => {
     /**
      * need to convert json object to json string
      */
@@ -19,12 +24,18 @@ export const _createNewCompany = async (name: string, descriptions: string, volu
         });
     }catch(e: any){
         console.error(e);
-        return false;
+        return {
+            mes: e,
+            bool: false
+        };
     }
 
-    const {success} = await res.json();
+    const {success, message} = await res.json();
 
-    if(!success) return false;
+    if(!success) return {
+        bool: false,
+        mes: message
+    };
 
     const supabase = await createClient();
 
@@ -35,11 +46,18 @@ export const _createNewCompany = async (name: string, descriptions: string, volu
                             descriptions,
                             volunteer_work,
                             is_verified : false,
+                            email
                         })
 
     if(error){
         console.error(error.message);
-        return false;
+        return {
+            mes: error.message,
+            bool: false,
+        };
     }
-    return true;
+    return {
+        mes: 'Company was sent to the registrar! You should receive an email once you company was approved!',
+        bool: true,    
+    };
 }

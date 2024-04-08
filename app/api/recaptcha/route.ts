@@ -2,7 +2,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 
-
+/**
+ * TODO: create middleware for limits
+*/
 
 export async function POST(req: NextRequest){
     const secretKey = process.env.NEXT_PUBLIC_SITE_SECRET;
@@ -30,8 +32,11 @@ export async function POST(req: NextRequest){
     if(data && data.success && data.score > 0.5){
         return NextResponse.json({
             success: true,
-            score: data.score
+            message: 'successful',
         })
     }
-    return NextResponse.json({success: false}, {status: 500});
+    return NextResponse.json({
+        success: false,
+        message: 'unsuccessful'
+    }, {status: 500});
 }
