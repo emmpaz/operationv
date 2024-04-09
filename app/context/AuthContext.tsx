@@ -23,8 +23,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            //
-            setUser(null);
+            setUser(await findUserSession());
             setLoading(false);
         }
         fetchUser();

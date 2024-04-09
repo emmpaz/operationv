@@ -45,8 +45,8 @@ const Certification =
                     <LoadingSpinner/>
                     :
                     <figure className="relative w-full">
-                        <div className="absolute inset-0 overflow-hidden">
-                            <Image src={data} alt="cert image" fill objectFit="cover"/>
+                        <div className="">
+                            <Image src={data} alt="cert image" width={100} height={100}/>
                         </div>
                     </figure>
                     }

@@ -13,7 +13,6 @@ import { LoadingSpinner } from "../common/LoadingSpinner";
 
 export const VolunteerDashboard = () => {
     const { user } = useContext(AuthContext)!;
-    const queryClient = useQueryClient();
 
     const { data: availableCerts, isLoading: LoadingAvailableCerts, refetch: available_refetch } = useQuery('availableCerts', () => fetchAllCerts(user.id));
     //certs needed from db
