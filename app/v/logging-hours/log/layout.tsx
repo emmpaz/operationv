@@ -1,4 +1,4 @@
-import { VolunteerPrivateRoutes } from "../../private_handling/PrivateRoutes"
+import { VolunteerPrivateRoutes } from "../../../privateWrappers/PrivateRoutes"
 
 
 
@@ -10,9 +10,7 @@ export default function RootLayout({
 
     return (
         <body>
-            <VolunteerPrivateRoutes>
                 {children}
-            </VolunteerPrivateRoutes>
         </body>
     )
 }

@@ -3,11 +3,12 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
-import { _getCompaniesFromDB } from "../../utils/supabase/db_calls/actions";
-import { adminSignIn } from "../../utils/supabase/user_handling/signInAdmin";
-import { adminSignUp } from "../../utils/supabase/user_handling/signUpAdmin";
+
 import Link from "next/link";
 import { useQuery } from "react-query";
+import { _getCompaniesFromDB } from "../../utils/supabase/actions/general.actions";
+import { adminSignIn } from "../../utils/supabase/auth_actions/signInAdmin";
+import { adminSignUp } from "../../utils/supabase/auth_actions/signUpAdmin";
 
 /**
  * Interface respresenting a company in the database

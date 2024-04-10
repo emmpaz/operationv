@@ -1,4 +1,4 @@
-import { AdminPrivateRoutes } from "../../private_handling/PrivateRoutes"
+import { AdminPrivateRoutes } from "../../privateWrappers/PrivateRoutes"
 
 
 

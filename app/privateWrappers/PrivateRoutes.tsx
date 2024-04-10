@@ -31,10 +31,10 @@ export const VolunteerPrivateRoutes: React.FC<PrivateRoutesProps> = ({children})
     const {user} = useContext(AuthContext)!;
     const router = useRouter();
     useEffect(() => {
-        if(user.role !== "volunteer")
+        if(!user || user.role !== "volunteer")
             router.push('/')
     }, [user])
-    if(user.role !== "volunteer"){
+    if(!user || user.role !== "volunteer"){
         return (
             <div className="w-full h-screen flex items-center justify-center">
                 <span className="loading loading-dots loading-lg bg-primary"></span>
@@ -49,10 +49,10 @@ export const AdminPrivateRoutes: React.FC<PrivateRoutesProps> = ({children}) => 
     const {user} = useContext(AuthContext)!;
     const router = useRouter();
     useEffect(() => {
-        if(user.role !== "admin")
+        if(!user || user.role !== "admin")
             router.push('/')
     }, [user])
-    if(user.role !== "admin"){
+    if(!user || user.role !== "admin"){
         return (
             <div className="w-full h-screen flex items-center justify-center">
                 <span className="loading loading-dots loading-lg bg-primary"></span>

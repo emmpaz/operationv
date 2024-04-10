@@ -17,15 +17,9 @@ interface FlattenedPendingCert extends iPendingCertificationDB {
     reviewNeeded: boolean,
 }
 
-const LoggingHoursList = () => {
+const LoggingHoursList = ({certifications} : {certifications : FlattenedPendingCert[]}) => {
     const { user } = useContext(AuthContext)!;
     const router = useRouter();
-    const { data, isLoading } = useQuery('approvedCerts', 
-        () => fetchApprovedCerts(user.id), 
-        {
-            refetchOnMount: "always"
-        }
-    );
 
     const handleNewLog = (cert_name: string, pending_id: string) => {
         const params = new URLSearchParams({
@@ -33,14 +27,12 @@ const LoggingHoursList = () => {
             pending_id : pending_id
         });
 
-        router.push(`dashboard/log?${params.toString()}`);
+        router.push(`logging-hours/log?${params.toString()}`);
     }
     return (
-        <div className="h-full divide-y">
-            {isLoading ?
-                <LoadingSpinner/>
-                :
-                data.map((certInfo: FlattenedPendingCert) => {
+        <div className="h-full divide-y bg-neutral rounded shadow-md">
+            {
+                certifications.map((certInfo: FlattenedPendingCert) => {
                     const progress = closetTailWindSize(certInfo.hours_completed / certInfo.hours_required);
                     return (
                         <div className="flex py-5 w-full justify-between" key={certInfo.id}>

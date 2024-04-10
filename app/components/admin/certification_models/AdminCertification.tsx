@@ -1,4 +1,4 @@
-import { ModelComponent, ApplicationModelProps } from "../../../../helpers/CustomModels";
+import { ModelComponent, ApplicationModelProps } from "../models/CustomModels";
 import AcceptModel from "../models/AcceptModel";
 import DeclineModel from "../models/DeclineModel";
 

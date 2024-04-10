@@ -26,7 +26,10 @@ export async function POST(req: NextRequest){
             }
         });
     }catch(e){
-        return NextResponse.json({success: false}, {status: 500});
+        return NextResponse.json({
+            success: false,
+            message: 'unsuccessful'
+        }, {status: 500});
     }
     const data = await fetch_res.json();
     if(data && data.success && data.score > 0.5){

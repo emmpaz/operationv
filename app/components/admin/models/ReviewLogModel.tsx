@@ -1,5 +1,5 @@
-import { _acceptLoggedHours } from "../../../utils/supabase/db_calls/actions";
-import { ModelComponent, ReviewHoursModelProps } from "../../../../helpers/CustomModels";
+import { _acceptLoggedHours } from "../../../utils/supabase/actions/admin.actions";
+import { ModelComponent, ReviewHoursModelProps } from "./CustomModels";
 
 
 

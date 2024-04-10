@@ -1,8 +1,8 @@
 'use client'
-import { FormEvent, useRef } from "react"
+import { FormEvent, useRef, useState } from "react"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { _createNewCompany } from "../utils/supabase/db_calls/admin.actions";
 import { useRouter } from "next/navigation";
+import { _createNewCompany } from "../utils/supabase/actions/admin.actions";
 
 
 
@@ -19,10 +19,18 @@ export default function Page() {
 
     const router = useRouter();
 
+
+    const [companyMismatch, setCompanyMismatch] = useState(false);
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (companyName.current.value !== confirmCompanyName.current.value) return;
-
+        if (companyName.current.value !== confirmCompanyName.current.value) {
+            setCompanyMismatch(true);
+            return;
+        };
+        
+        setCompanyMismatch(false);
+        
         if (!executeRecaptcha) {
             console.error('not available right now');
             return;
@@ -58,12 +66,15 @@ export default function Page() {
                     />
                 </div>
                 <div className="mb-4">
+                {companyMismatch && <label className="block text-xs font-medium text-red-500">Company input fields do not match</label>}
                     <label
                         className="block mb-2 text-sm font-bold text-gray-700"
                     >Company</label>
                     <input
                         required
-                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-primary focus:shadow-outline text-base-100"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded focus:outline-primary focus:shadow-outline text-base-100 ${
+                            companyMismatch ? "border-red-500" : "border-gray-300"
+                        }`}
                         ref={companyName}
                     />
                 </div>
@@ -73,7 +84,9 @@ export default function Page() {
                     >Re-enter company name</label>
                     <input
                         required
-                        className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded focus:outline-primary focus:shadow-outline text-base-100"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded focus:outline-primary focus:shadow-outline text-base-100 ${
+                            companyMismatch ? "border-red-500" : "border-gray-300"
+                        }`}
                         ref={confirmCompanyName}
                     />
                 </div>

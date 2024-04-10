@@ -2,8 +2,8 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
-import { signInUser } from "../../utils/supabase/user_handling/signInUser";
-import { signUpUser } from "../../utils/supabase/user_handling/signUpUser";
+import { signInUser } from "../../utils/supabase/auth_actions/signInUser";
+import { signUpUser } from "../../utils/supabase/auth_actions/signUpUser";
 
 /**
  * for error handling the sign in process

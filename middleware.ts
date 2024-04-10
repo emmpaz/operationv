@@ -6,6 +6,8 @@ const redis = Redis.fromEnv();
 
 const ONE_DAY_IN_SECONDS = 86400;
 
+let count : number = 0;
+
 /**
  * this middleware has 2 purposes:
  * 1. for rate limiting users who are attempting to register a company (1 each day)

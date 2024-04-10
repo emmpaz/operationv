@@ -1,7 +1,8 @@
 'use server'
 
 import { iCertificationDB } from "../../../helpers/DatabaseTypes"
-import { _getApprovedCertificationsDB, _getCertificationsFromDB, _getPendingCertificationsDB } from "../supabase/db_calls/actions"
+import { _getCertificationsFromDB } from "../supabase/actions/general.actions"
+import { _getApprovedCertificationsDB, _getPendingCertificationsDB } from "../supabase/actions/volunteer.actions"
 
 export const fetchAllCerts = async (id : string) => {
     const list = await _getCertificationsFromDB(id)

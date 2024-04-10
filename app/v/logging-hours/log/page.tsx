@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
-import { _addNewHourLog } from "../../utils/supabase/db_calls/actions";
-import { LoggingParamNames } from "../../../helpers/Enums";
+import { _addNewHourLog } from "../../../utils/supabase/actions/volunteer.actions";
+import { LoggingParamNames } from "../../../../helpers/Enums";
 
 const LogHours = () => {
     const router = useRouter();

@@ -1,26 +1,48 @@
 'use client'
 
-import { use, useContext, useEffect, useState } from "react"
-import { AuthContext } from "../../context/AuthContext"
-import { iCertificationDB } from "../../../helpers/DatabaseTypes";
-import { useQuery, useQueryClient } from "react-query";
+import {useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useQuery} from "react-query";
 import { fetchAllCerts, fetchPendingCerts } from "../../utils/queries/queries";
 import { NavBar } from "../common/navbar";
 import Certification from "../common/certification";
 import LoggingHoursList from "../volunteer/loggingHoursList";
 import { LoadingSpinner } from "../common/LoadingSpinner";
+import { iCertificationDB } from "../../../helpers/DatabaseTypes";
+import { _checkMaxApplications } from "../../utils/supabase/actions/volunteer.actions";
 
+const MAX_APPLICATIONS = 5;
 
 export const VolunteerDashboard = () => {
     const { user } = useContext(AuthContext)!;
 
-    const { data: availableCerts, isLoading: LoadingAvailableCerts, refetch: available_refetch } = useQuery('availableCerts', () => fetchAllCerts(user.id));
-    //certs needed from db
-    const { data: pendingCerts, isLoading: LoadingPendingCerts, refetch: pending_refetch } = useQuery('pendingCerts', () => fetchPendingCerts(user.id));
+    const {
+        data: maxApplications,
+        isLoading: LoadingMaxApplications,
+        refetch: maxApp_refetch} = useQuery<boolean>(
+            'maxApplications', 
+            () => _checkMaxApplications(user.id));
+
+    const { 
+        data: availableCerts,
+        isLoading: LoadingAvailableCerts,
+        refetch: available_refetch } = useQuery<iCertificationDB[]>(
+            'availableCerts', 
+            () => fetchAllCerts(user.id), 
+            {enabled: !LoadingMaxApplications});
+
+    
+    const { 
+        data: pendingCerts, 
+        isLoading: LoadingPendingCerts, 
+        refetch: pending_refetch } = useQuery<iCertificationDB[]>(
+            'pendingCerts', 
+            () => fetchPendingCerts(user.id));
 
     const [navbar, setNavbar] = useState(false);
 
     const revalidate = () => {
+        maxApp_refetch();
         available_refetch();
         pending_refetch();
     }
@@ -60,11 +82,11 @@ export const VolunteerDashboard = () => {
                         <div className=" m-1 w-full flex flex-col items-center p-2">
                             <div className="w-fit flex flex-col">
                                 <h2 className="text-base-100 text-xl py-5">Pending Opportunities</h2>
-                                <div className="self-center max-w-screen-xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div className="self-center max-w-screen-xl w-full grid grid-cols-2 md:grid-cols-3 gap-4">
                                     {LoadingPendingCerts ?
                                         <LoadingSpinner/>
                                         :
-                                        pendingCerts.map((cert, i) => {
+                                        pendingCerts.map((cert : iCertificationDB, i) => {
                                             return (
                                                 <Certification
                                                     key={i}
@@ -74,6 +96,7 @@ export const VolunteerDashboard = () => {
                                                     name={cert.name}
                                                     company_name={cert.company_name}
                                                     apply={false}
+                                                    maxApplied={false}
                                                     admin={false}
                                                 ></Certification>
                                             )
@@ -86,11 +109,11 @@ export const VolunteerDashboard = () => {
                         <div className=" m-1 w-full flex flex-col items-center p-2">
                             <div className="w-fit flex flex-col">
                                 <h2 className="text-base-100 text-xl py-5">Find Opportunities</h2>
-                                <div className="self-center max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {LoadingAvailableCerts ?
+                                <div className="self-center max-w-screen-xl w-full grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    {LoadingMaxApplications || LoadingAvailableCerts ?
                                         <LoadingSpinner/>
                                         :
-                                        availableCerts.map((cert, i) => {
+                                        availableCerts.map((cert : iCertificationDB, i) => {
                                             return (
                                                 <Certification
                                                     key={i}
@@ -100,6 +123,7 @@ export const VolunteerDashboard = () => {
                                                     name={cert.name}
                                                     company_name={cert.company_name}
                                                     apply={true}
+                                                    maxApplied={maxApplications}
                                                     onApply={revalidate}
                                                     admin={false}
                                                 ></Certification>

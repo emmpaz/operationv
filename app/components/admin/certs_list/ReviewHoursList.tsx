@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { _getReviewHourLogs } from "../../../utils/supabase/db_calls/actions";
 import { iCertificationDB, iHoursLoggingDB, iPendingCertificationDB, iUserDB } from "../../../../helpers/DatabaseTypes";
-import { ModelComponent, ReviewHoursModelProps, useModel } from "../../../../helpers/CustomModels";
+import { ModelComponent, ReviewHoursModelProps, useModel } from "../models/CustomModels";
 import ReviewLogModel from "../models/ReviewLogModel";
 import { useQuery } from "react-query";
 import { LoadingSpinner } from "../../common/LoadingSpinner";
+import { _getReviewHourLogs } from "../../../utils/supabase/actions/admin.actions";
 
 interface FlattenedHoursLogged extends iHoursLoggingDB {
     PendingCertifications: FlattenedPendingCert,

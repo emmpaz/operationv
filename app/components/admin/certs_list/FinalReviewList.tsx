@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
-import { _getReviewCertificationsFromDB } from "../../../utils/supabase/db_calls/actions";
 import { CertificationStatus } from "../../../../helpers/Enums";
 import { iUserDB } from "../../../../helpers/DatabaseTypes";
 import { useState } from "react";
-import { DistributionModelProps, useModel } from "../../../../helpers/CustomModels";
+import { DistributionModelProps, useModel } from "../models/CustomModels";
 import DistributeCertificationModel from "../models/DistributeCertificationModel";
 import { LoadingSpinner } from "../../common/LoadingSpinner";
+import { _getReviewCertificationsFromDB } from "../../../utils/supabase/actions/admin.actions";
 
 interface iPendingCertificationAdminDB {
     id: string,

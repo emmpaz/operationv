@@ -1,11 +1,11 @@
 
-import { _getCompanyApplicationsFromDB } from "../../../utils/supabase/db_calls/actions";
 import { iUserDB } from "../../../../helpers/DatabaseTypes";
 import { CertificationStatus } from "../../../../helpers/Enums";
 import AdminCertification from "../certification_models/AdminCertification";
-import { ModelComponent, ApplicationModelProps, useModel } from "../../../../helpers/CustomModels";
+import { ModelComponent, ApplicationModelProps, useModel } from "../models/CustomModels";
 import { useQuery } from "react-query";
 import { LoadingSpinner } from "../../common/LoadingSpinner";
+import { _getCompanyApplicationsFromDB } from "../../../utils/supabase/actions/admin.actions";
 
 
 interface iPendingCertificationAdminDB {

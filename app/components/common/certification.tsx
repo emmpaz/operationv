@@ -1,7 +1,7 @@
-import { _applyToCertificationDB } from "../../utils/supabase/db_calls/actions";
 import { useQuery } from "react-query";
 import { LoadingSpinner } from "./LoadingSpinner";
 import Image from "next/image";
+import { _applyToCertificationDB } from "../../utils/supabase/actions/volunteer.actions";
 
 
 
@@ -16,6 +16,7 @@ const Certification =
             name: string,
             company_name: string,
             apply: boolean,
+            maxApplied?: boolean,
             admin: boolean,
             onApply?: () => void
         }) => {
@@ -44,9 +45,9 @@ const Certification =
                 {isLoading ?
                     <LoadingSpinner/>
                     :
-                    <figure className="relative w-full">
-                        <div className="">
-                            <Image src={data} alt="cert image" width={100} height={100}/>
+                    <figure className="relative w-full aspect-video">
+                        <div className="absolute inset-0">
+                            <Image src={data} alt="cert image" fill sizes="100vw" style={{objectFit: 'cover'}} />
                         </div>
                     </figure>
                     }
@@ -63,8 +64,8 @@ const Certification =
                                 Edit
                             </button>)
                         }
-                        {/**not admin but can still apply */}
-                        {props.apply && !props.admin &&
+                        {/**not admin but can still apply if max not reached*/}
+                        {!props.maxApplied && props.apply && !props.admin &&
                             (<button className="btn btn-primary rounded font-medium" onClick={handleApply}>
                                 Apply
                             </button>)
@@ -73,6 +74,12 @@ const Certification =
                         {!props.apply && !props.admin &&
                             (<button className="btn btn-primary rounded font-medium" onClick={handleApply} disabled>
                                 Applied
+                            </button>)
+                        }
+                        {/**max reached */}
+                        {props.maxApplied && !props.admin &&
+                            (<button className="btn btn-primary rounded font-medium" onClick={handleApply} disabled>
+                                Max Reached
                             </button>)
                         }
                     </div>

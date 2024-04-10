@@ -1,6 +1,6 @@
-import { _acceptApplication } from "../../../utils/supabase/db_calls/actions";
-import { ApplicationModelProps, ModelComponent } from "../../../../helpers/CustomModels";
+import { ApplicationModelProps, ModelComponent } from "./CustomModels";
 import { http_sendEmail } from "../../../utils/http/functions";
+import { _acceptApplication } from "../../../utils/supabase/actions/admin.actions";
 
 const AcceptModel: ModelComponent<ApplicationModelProps> = ({
   application_id,

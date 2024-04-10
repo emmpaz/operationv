@@ -1,6 +1,5 @@
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
-import { _getCompanyCertificationsFromDB } from "../../utils/supabase/db_calls/actions";
 import { iCertificationDB } from "../../../helpers/DatabaseTypes";
 import { useEffect, useState } from "react";
 import { NavBar } from "../common/navbar";
@@ -10,6 +9,7 @@ import PendingCertificationsList from "../admin/certs_list/PendingCertifications
 import Certification from "../common/certification";
 import { LoadingSpinner } from "../common/LoadingSpinner";
 import Link from "next/link";
+import { _getCompanyCertificationsFromDB } from "../../utils/supabase/actions/admin.actions";
 
 
 

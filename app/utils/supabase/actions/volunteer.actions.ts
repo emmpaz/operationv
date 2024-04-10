@@ -142,6 +142,77 @@ export const _getApprovedCertificationsDB = async (userID: string) => {
     return list;
 }
 
+export const _getTotalHoursApproved = async(userID: string) => {
+    const supabase = await createClient();
+
+    const {data, error} = await supabase
+                .from(DBNames.PENDING_CERTIFICATIONS_DB)
+                .select(`
+                    *,
+                    ${DBNames.CERTIFICATIONS_DB}(
+                        *
+                    ),
+                    ${DBNames.HOURS_LOGGING_DB}(
+                        *
+                    )
+                `)
+                .match({
+                    'status' : CertificationStatus.APPROVED
+                })
+                .eq('user_id', userID);
+    
+    if(error){
+        console.log(error.message);
+        return 0;
+    }
+    if(!data) 
+        return 0;
+
+    const totalHoursCompleted : number = data.reduce(
+        (total : number, pending_cert: any) => 
+                total + pending_cert.hours_completed, 0);
+    
+    return totalHoursCompleted;
+}
+
+export const _getTotalHoursPending = async(userID: string) => {
+    const supabase = await createClient();
+
+    const {data, error} = await supabase
+                .from(DBNames.PENDING_CERTIFICATIONS_DB)
+                .select(`
+                    *,
+                    ${DBNames.CERTIFICATIONS_DB}(
+                        *
+                    ),
+                    ${DBNames.HOURS_LOGGING_DB}(
+                        *
+                    )
+                `)
+                .match({
+                    'status' : CertificationStatus.APPROVED
+                })
+                .eq('user_id', userID);
+    
+    if(error){
+        console.log(error.message);
+        return 0;
+    }
+    if(!data) 
+        return 0;
+
+    const totalHoursPending : number = data.reduce(
+        (pending_total : number, pending_cert: any) => {
+                return pending_total + pending_cert.HoursLogging.reduce((
+                    (logged_total : number, log : iHoursLoggingDB) => {
+                        return logged_total + ((log.review_hours) ? 0 : log.hours_logged);
+                    }
+                ), 0);
+            }, 0);
+    
+    return totalHoursPending;
+}
+
 export const _addNewHourLog = async (
     description: string, 
     hours: number, 

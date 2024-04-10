@@ -1,4 +1,4 @@
-import { AuthPrivateRoutes } from "../private_handling/PrivateRoutes"
+import { AuthPrivateRoutes } from "../privateWrappers/PrivateRoutes"
 
 export default function PrivateLayout({
     children,
