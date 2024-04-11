@@ -18,8 +18,7 @@ export const findUserSession = async (): Promise<iUserDB | null> => {
     if (data.length) {
         const userData = data[0];
         return {
-            ...userData,
-            role: user.user.user_metadata.role
+            ...userData
         };
     }
     else{

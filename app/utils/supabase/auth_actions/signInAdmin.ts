@@ -22,8 +22,7 @@ export const adminSignIn = async (email: string, password: string) => {
     return {
         bool: true,
         admin: {
-            ...admin,
-            role: data.user.user_metadata.role
+            ...admin
         }
     }
 }

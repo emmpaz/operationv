@@ -56,7 +56,7 @@ export const VolunteerLogin = (props: { resetChoiceHandler: () => void }) => {
                 
                 emailRef!.current!.value = "";
                 passwordRef!.current!.value = ""
-                router.push("/dashboard");
+                router.push("/v/dashboard");
             }
             else {
                 setInvalid({ bool: invalid_bool, mes: mes as string });

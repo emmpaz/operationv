@@ -13,7 +13,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        custom: '#EBE8E8',
+        custom: '#F3F3F3',
       }
     },
   },
@@ -29,7 +29,7 @@ module.exports = {
           "accent": "#81BBB1",
           "neutral": "#F6F8F8",
           "base-100": "#0B0F0E",
-          "custom": "#EBE8E8"
+          "custom": "#F3F3F3"
         }
       },
 

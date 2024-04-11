@@ -51,5 +51,5 @@ export const signInUser = async (
         mes: 'Success',
         user: {
             ...user,
-            role: data.user.user_metadata.role}}
+        }}
 }

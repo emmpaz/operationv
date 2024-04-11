@@ -40,7 +40,8 @@ export const _addUserRoleAndDB = async (id : string, email: string) => {
             uuid: id,
             name: localStorage.getItem('name')?.toString() as string ?? "",
             email: email,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
+            role: 'volunteer'
         })
 
         if (insertError) {
@@ -85,7 +86,8 @@ export const _addAdminRoleAndDB = async (email: string, id : string) => {
             uuid: id,
             name: localStorage.getItem('name')?.toString() as string ?? "",
             email: email,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
+            role: 'admin'
         })
 
         if (insertError) {
@@ -148,4 +150,21 @@ export const _getCompaniesFromDB = async () => {
 
     return companies;
     
+}
+
+export const _getAllUsersAndCertifications = async () => {
+    const supabase = await createClient();
+
+    const {data : users} = await supabase
+                            .from(DBNames.USERS_DB)
+                            .select()
+                            .neq('role', 'admin');
+    const {data: certifications} = await supabase
+                            .from(DBNames.CERTIFICATIONS_DB)
+                            .select()
+                            
+    return [
+        ...users,
+        ...certifications
+    ];
 }

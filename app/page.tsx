@@ -18,7 +18,8 @@ export default function Page() {
 
     useEffect(() => {
         if (user) {
-            router.push('/dashboard');
+            if(user.role === 'admin') router.push('/a/dashboard');
+            else router.push('v/dashboard');
         }
         else
             setLoading(false);

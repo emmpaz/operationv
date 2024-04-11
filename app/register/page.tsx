@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 import { _createNewCompany } from "../utils/supabase/actions/admin.actions";
 
 
-
+/**
+ * Creating a new company
+ * @returns 
+ */
 export default function Page() {
 
     const email = useRef(null);

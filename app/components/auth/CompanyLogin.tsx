@@ -76,7 +76,7 @@ export const CompanyLogin = (props: { resetChoiceHandler: () => void }) => {
 
                 emailRef!.current!.value = "";
                 passwordRef!.current!.value = ""
-                router.push('/dashboard');
+                router.push('/a/dashboard');
             }
         }
     }
