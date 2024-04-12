@@ -6,27 +6,16 @@ import { AuthContext } from "../../context/AuthContext";
 import image from './test.png';
 import Link from "next/link";
 import { signOut } from "../../utils/supabase/auth_actions/signOutUser";
+import { NavContext } from "../../context/NavContext";
 
 export const NavBar = (
     props: {
         noUser?: boolean,
-        open: boolean,
-        handleNav?: (bool: boolean) => void
     }
 ) => {
-    const router = useRouter();
     const { user, userHandler } = useContext(AuthContext)!;
+    const {handleNav, navbar} = useContext(NavContext)!;
 
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth > 1024)
-                props.handleNav!(false);
-        }
-
-        window.addEventListener('resize', handleResize);
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     const signOutHandler = () => {
         signOut();
@@ -113,9 +102,9 @@ export const NavBar = (
                 }
             </div>
             {/*mobile nav bar below */}
-            <div className={`lg:hidden top-0 fixed left-0 h-full w-full z-10 ${props.open ? 'visible opacity-1 fixed inset-0 ' : 'opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300`}>
+            <div className={`lg:hidden top-0 fixed left-0 h-full w-full z-10 ${navbar ? 'visible opacity-1 fixed inset-0 ' : 'opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300`}>
                 <div className="flex h-full w-full">
-                    <div className={`bg-neutral h-full opacity-100 w-100 ${props.open ? '' : 'w-0'} overflow-hidden trasition-all duration-300`}>
+                    <div className={`bg-neutral h-full opacity-100 min-w-60 w-5/12 ${navbar ? '' : 'w-0'} overflow-hidden trasition-all duration-300`}>
                         {!props.noUser &&
                             <div className="flex flex-col justify-start h-full w-full">
                                 <div className="flex items-center justify-center p-14">
@@ -191,11 +180,11 @@ export const NavBar = (
                             </div>
                         }
                     </div>
-                    <div className={`w-full opacity-70 ${props.open ? 'bg-gray-700' : 'bg-opacity-0'} transition-all duration-300`}>
+                    <div className={`w-full opacity-70 ${navbar ? 'bg-gray-700' : 'bg-opacity-0'} transition-all duration-300`}>
                         <div className="flex-none">
                             <button
                                 className="btn btn-square btn-ghost"
-                                onClick={() => props.handleNav!(false)}
+                                onClick={() => handleNav(false)}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-10 h-10 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 L18 6 M6 6 l12 12"></path></svg>
                             </button>

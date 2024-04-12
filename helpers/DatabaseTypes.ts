@@ -6,7 +6,9 @@ export interface iUserDB {
     created_at? : string,
     name: string,
     email : string
-    role?: string,
+    role: string,
+    completed_onboarding?: boolean,
+    
 }
 
 export interface iCertificationDB {

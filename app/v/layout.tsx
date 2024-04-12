@@ -1,4 +1,4 @@
-import { VolunteerPrivateRoutes } from "../privateWrappers/PrivateRoutes"
+import { AuthPrivateRoutes, OnboardingPrivateRoutes, VolunteerPrivateRoutes } from "../privateWrappers/PrivateRoutes"
 
 
 
@@ -9,10 +9,12 @@ export default function RootLayout({
 }) {
 
     return (
-        <body>
+        <AuthPrivateRoutes>
             <VolunteerPrivateRoutes>
-                {children}
+                <OnboardingPrivateRoutes>
+                    {children}
+                </OnboardingPrivateRoutes>
             </VolunteerPrivateRoutes>
-        </body>
+        </AuthPrivateRoutes>
     )
 }

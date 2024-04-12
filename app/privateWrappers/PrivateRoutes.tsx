@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
 import { useRouter } from "next/navigation";
 
@@ -10,55 +10,90 @@ interface PrivateRoutesProps{
 }
 
 export const AuthPrivateRoutes: React.FC<PrivateRoutesProps> = ({children}) => {
-    const {user} = useContext(AuthContext)!;
+    const {user, isLoading} = useContext(AuthContext)!;
     const router = useRouter();
     useEffect(() => {
-        if(!user)
-            router.push('/')
-    }, [user])
-    if(!user) {
+        if(!user) router.push('/')
+
+    }, [isLoading, user])
+    if(isLoading) {
         return (
             <div className="w-full h-screen flex items-center justify-center">
                 <span className="loading loading-dots loading-lg bg-primary"></span>
             </div>
         )
     };
+
+    if(!user) return (
+        <div className="w-full h-screen flex items-center justify-center">
+            <span className="loading loading-dots loading-lg bg-primary"></span>
+        </div>
+    );
 
     return <>{children}</>
 }
 
 export const VolunteerPrivateRoutes: React.FC<PrivateRoutesProps> = ({children}) => {
-    const {user} = useContext(AuthContext)!;
+    const {user, isLoading} = useContext(AuthContext)!;
     const router = useRouter();
-    useEffect(() => {
-        if(!user || user.role !== "volunteer")
-            router.push('/')
-    }, [user])
-    if(!user || user.role !== "volunteer"){
+    
+
+    if(user.role !== 'volunteer'){
+        router.push('/');
         return (
             <div className="w-full h-screen flex items-center justify-center">
                 <span className="loading loading-dots loading-lg bg-primary"></span>
             </div>
-        )
-    };
+        );
+    }
 
     return <>{children}</>
 }
 
-export const AdminPrivateRoutes: React.FC<PrivateRoutesProps> = ({children}) => {
-    const {user} = useContext(AuthContext)!;
+export const OnboardingPrivateRoutes: React.FC<PrivateRoutesProps> = ({children}) => {
+    const {user, isLoading} = useContext(AuthContext)!;
     const router = useRouter();
-    useEffect(() => {
-        if(!user || user.role !== "admin")
-            router.push('/')
-    }, [user])
-    if(!user || user.role !== "admin"){
+
+    if(user && !user.completed_onboarding){
+        router.push('/onboarding');
         return (
             <div className="w-full h-screen flex items-center justify-center">
                 <span className="loading loading-dots loading-lg bg-primary"></span>
             </div>
-        )
-    };
+        );
+    }
+
+    return <>{children}</>
+}
+
+export const OnboardingDoneRoute: React.FC<PrivateRoutesProps> = ({children}) => {
+    const {user, isLoading} = useContext(AuthContext)!;
+    const router = useRouter();
+
+    if(user && user.completed_onboarding){
+        router.push('/v/dashboard');
+        return (
+            <div className="w-full h-screen flex items-center justify-center">
+                <span className="loading loading-dots loading-lg bg-primary"></span>
+            </div>
+        );
+    }
+    return <>{children}</>
+}
+
+export const AdminPrivateRoutes: React.FC<PrivateRoutesProps> = ({children}) => {
+    const {user, isLoading} = useContext(AuthContext)!;
+    const router = useRouter();
+    
+
+    if(user.role !== 'admin'){
+        router.push('/');
+        return (
+            <div className="w-full h-screen flex items-center justify-center">
+                <span className="loading loading-dots loading-lg bg-primary"></span>
+            </div>
+        );
+    }
 
     return <>{children}</>
 }

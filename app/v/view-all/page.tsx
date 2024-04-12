@@ -8,6 +8,8 @@ import { iCertificationDB } from "../../../helpers/DatabaseTypes";
 import { fetchAllCerts } from "../../utils/queries/queries";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import Certification from "../../components/common/certification";
+import PageWrapper from "../../../lib/layouts/PageWrapper";
+import { NavHamburger } from "../../../lib/buttons/NavHamburger";
 
 
 
@@ -35,33 +37,36 @@ export default function Page() {
     }
 
     return (
-        <div className="w-full flex p-1">
-            <div className=" m-1 w-full flex flex-col items-center p-2">
-                <div className="w-fit flex flex-col">
-                    <h2 className="text-base-100 text-xl py-5">Find Opportunities</h2>
-                    <div className="self-center max-w-screen-xl w-full grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {LoadingMaxApplications || LoadingAvailableCerts ?
-                            <LoadingSpinner />
-                            :
-                            availableCerts.map((cert: iCertificationDB, i) => {
-                                return (
-                                    <Certification
-                                        key={i}
-                                        certID={cert.id}
-                                        userID={user?.id as string}
-                                        hours={cert.hours}
-                                        name={cert.name}
-                                        company_name={cert.company_name}
-                                        apply={true}
-                                        maxApplied={maxApplications}
-                                        onApply={revalidate}
-                                        admin={false}
-                                    ></Certification>
-                                )
-                            })}
+        <PageWrapper>
+            <NavHamburger/>
+            <div className="w-full flex p-1">
+                <div className=" m-1 w-full flex flex-col items-center p-2">
+                    <div className="w-fit flex flex-col">
+                        <h2 className="text-base-100 text-xl py-5">Find Opportunities</h2>
+                        <div className="self-center max-w-screen-xl w-full grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {LoadingMaxApplications || LoadingAvailableCerts ?
+                                <LoadingSpinner />
+                                :
+                                availableCerts.map((cert: iCertificationDB, i) => {
+                                    return (
+                                        <Certification
+                                            key={i}
+                                            certID={cert.id}
+                                            userID={user?.id as string}
+                                            hours={cert.hours}
+                                            name={cert.name}
+                                            company_name={cert.company_name}
+                                            apply={true}
+                                            maxApplied={maxApplications}
+                                            onApply={revalidate}
+                                            admin={false}
+                                        ></Certification>
+                                    )
+                                })}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </PageWrapper>
     )
 }

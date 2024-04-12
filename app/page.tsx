@@ -2,10 +2,10 @@
 
 import { useContext, useEffect, useLayoutEffect, useState } from "react"
 import { AuthContext } from "./context/AuthContext"
-import { VolunteerLogin } from "./components/auth/VolunteerLogin";
-import { CompanyLogin } from './components/auth/CompanyLogin';
+
 import { redirect, useRouter } from "next/navigation";
-import { LoadingSpinner } from "./components/common/LoadingSpinner";
+import { VolunteerLogin } from "./components/auth/VolunteerLogin";
+import { CompanyLogin } from "./components/auth/CompanyLogin";
 
 export default function Page() {
     const { user } = useContext(AuthContext)!;
@@ -18,8 +18,13 @@ export default function Page() {
 
     useEffect(() => {
         if (user) {
-            if(user.role === 'admin') router.push('/a/dashboard');
-            else router.push('v/dashboard');
+            if (user.role === 'admin') {
+                router.push('/a/dashboard');
+            }
+            else {
+                if(user.completed_onboarding) router.push('/v/dashboard');
+                else router.push('/onboarding');
+            }
         }
         else
             setLoading(false);
@@ -32,7 +37,9 @@ export default function Page() {
 
     return (
         loading ?
-            <LoadingSpinner/>
+            <div className="w-full h-screen flex items-center justify-center">
+                <span className="loading loading-dots loading-lg bg-primary"></span>
+            </div>
             :
 
             <div className=" w-screen h-screen flex items-center flex-col">

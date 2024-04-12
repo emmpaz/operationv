@@ -7,6 +7,7 @@ import { findUserSession } from "../utils/supabase/auth_actions/findUserSession"
 interface AuthContextType {
     user: iUserDB | null,
     userHandler: (user: iUserDB | null) => void;
+    isLoading: boolean
 }
 
 interface AuthProviderProps {
@@ -17,19 +18,19 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<iUserDB | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const userHandler = (user: iUserDB | null) => setUser(user);
 
     useEffect(() => {
         const fetchUser = async () => {
             setUser(await findUserSession());
-            setLoading(false);
+            setIsLoading(false);
         }
         fetchUser();
     }, [])
 
-    if(loading){
+    if(isLoading){
         return(
             <div className="w-full h-screen flex items-center justify-center">
                     <span className="loading loading-dots loading-lg bg-primary"></span>
@@ -38,7 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, userHandler }}>
+        <AuthContext.Provider value={{ user, userHandler, isLoading }}>
             {children}
         </AuthContext.Provider>
     )

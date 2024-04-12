@@ -8,6 +8,8 @@ import { AuthContext } from "../../context/AuthContext";
 import CertificationProgress from "../../components/volunteer/visualizeLoggedHours";
 import { fetchApprovedCerts } from "../../utils/queries/queries";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import PageWrapper from "../../../lib/layouts/PageWrapper";
+import { NavHamburger } from "../../../lib/buttons/NavHamburger";
 
 
 
@@ -32,46 +34,32 @@ export default function Page() {
     }
 
     return (
-        <div className="flex bg-custom min-h-screen">
-            <div className="w-full flex">
-                <NavBar open={navbar} handleNav={handleNav} />
-                <div className="w-full flex flex-col max-h-screen overflow-y-auto">
-                    <div className="flex-none lg:hidden m-4">
-                        <button
-                            className="btn btn-square btn-ghost hover:text-primary"
-                            onClick={() => handleNav(true)}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div className="w-full flex justify-center pt-8">
-                        <h1 className="flex flex-wrap justify-center items-end">
-                            <span className="text-9xl text-primary mr-1">{totalHoursCompleted}</span>
-                            <span className="min-w-fit">total hours logged</span>
-                        </h1>
-                        <h1 className="flex flex-wrap justify-center items-end">
-                            <span className="text-9xl text-secondary mr-1">{totalHoursPending}</span>
-                            <span className="min-w-fit">total hours pending</span>
-                        </h1>
-                    </div>
-                    <div className="w-full justify-center flex flex-col-reverse md:flex-row p-10">
-                        {isLoading ?
-                            <LoadingSpinner />
-                            :
-                            <>
-                                <div className="w-full md:w-1/2">
-                                    <LoggingHoursList certifications={data} />
-                                </div>
-                                <div className="w-full md:w-1/2">
-                                    TODO
-                                </div>
-                            </>
-                        }
-                    </div>
-                </div>
+        <PageWrapper>
+            <NavHamburger />
+            <div className="w-full flex justify-center pt-8">
+                <h1 className="flex flex-wrap justify-center items-end">
+                    <span className="text-9xl text-primary mr-1">{totalHoursCompleted}</span>
+                    <span className="min-w-fit">total hours logged</span>
+                </h1>
+                <h1 className="flex flex-wrap justify-center items-end">
+                    <span className="text-9xl text-secondary mr-1">{totalHoursPending}</span>
+                    <span className="min-w-fit">total hours pending</span>
+                </h1>
             </div>
-        </div>
+            <div className="w-full justify-center flex flex-col-reverse md:flex-row p-10">
+                {isLoading ?
+                    <LoadingSpinner />
+                    :
+                    <>
+                        <div className="w-full md:w-1/2">
+                            <LoggingHoursList certifications={data} />
+                        </div>
+                        <div className="w-full md:w-1/2">
+                            TODO
+                        </div>
+                    </>
+                }
+            </div>
+        </PageWrapper>
     )
 }

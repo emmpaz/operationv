@@ -1,6 +1,7 @@
 import { AuthProvider } from "./context/AuthContext";
 import '../styles/global.css';
 import ReactQueryProvider from "./context/ReactQueryProvider";
+import { NavProvider } from "./context/NavContext";
 
 export const metadata = {
   title: 'TrueImpact',
@@ -18,7 +19,9 @@ export default function RootLayout({
       <body>
         <ReactQueryProvider>
           <AuthProvider>
+            <NavProvider>
               {children}
+            </NavProvider>
           </AuthProvider>
         </ReactQueryProvider>
       </body>
