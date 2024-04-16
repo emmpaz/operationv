@@ -1,8 +1,7 @@
 import { useQuery } from "react-query";
 import { LoadingSpinner } from "./LoadingSpinner";
-import Image from "next/image";
 import { _applyToCertificationDB } from "../../utils/supabase/actions/volunteer.actions";
-
+import image from './google.png';
 
 
 
@@ -41,21 +40,23 @@ const Certification =
         }
 
         return (
-            <div className="card card-compact w-full bg-neutral rounded shadow-lg relative">
-                {isLoading ?
-                    <LoadingSpinner/>
-                    :
-                    <figure className="relative w-full aspect-video">
-                        <div className="absolute inset-0">
-                            <Image src={data} alt="cert image" fill sizes="100vw" style={{objectFit: 'cover'}} />
+            <div className="flex p-7 w-full bg-neutral rounded shadow-lg relative">
+                <div className="flex flex-col w-full">
+                    <div className="flex w-full">
+                        {isLoading ?
+                            <LoadingSpinner />
+                            :
+                            <div style={{ width: '64px', height: '64px' }}>
+                                <img src={image.src} alt="cert image" />
+                            </div>
+                        }
+                        <div className="ml-3">
+                            <p className=" font-semibold text-base-100 line-clamp-1">{props.name}</p>
+                            <p className=" text-sm">{props.company_name}</p>
                         </div>
-                    </figure>
-                    }
-                <div className="card-body">
-                    <p className="card-title text-base-100">{props.name}</p>
-                    <p>{props.company_name}</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary rounded font-medium">
+                    </div>
+                    <div className="flex justify-end pt-3">
+                        <button className="btn btn-primary btn-sm rounded font-medium">
                             View
                         </button>
                         {/**is admin */}
@@ -66,19 +67,19 @@ const Certification =
                         }
                         {/**not admin but can still apply if max not reached*/}
                         {!props.maxApplied && props.apply && !props.admin &&
-                            (<button className="btn btn-primary rounded font-medium" onClick={handleApply}>
+                            (<button className="btn btn-primary btn-sm rounded font-medium" onClick={handleApply}>
                                 Apply
                             </button>)
                         }
                         {/**not admin and already applied*/}
-                        {!props.apply && !props.admin &&
-                            (<button className="btn btn-primary rounded font-medium" onClick={handleApply} disabled>
+                        {!props.maxApplied && !props.apply && !props.admin &&
+                            (<button className="btn btn-primary btn-sm rounded font-medium" onClick={handleApply} disabled>
                                 Applied
                             </button>)
                         }
                         {/**max reached */}
                         {props.maxApplied && !props.admin &&
-                            (<button className="btn btn-primary rounded font-medium" onClick={handleApply} disabled>
+                            (<button className="btn btn-primary btn-sm rounded font-medium" onClick={handleApply} disabled>
                                 Max Reached
                             </button>)
                         }

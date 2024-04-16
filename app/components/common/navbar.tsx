@@ -25,7 +25,7 @@ export const NavBar = (
 
     return (
         <nav className="h-full">
-            <div className="lg:w-72 lg:block bg-neutral rounded hidden h-full sitcky">
+            <div className="lg:w-72 lg:block bg-neutral rounded hidden h-full sitcky shadow-md">
                 {!props.noUser &&
                     <div className="flex flex-col justify-start h-full w-full">
                         <div className="flex items-center justify-center p-14">
