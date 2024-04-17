@@ -2,16 +2,39 @@
 
 import { iCertificationDB } from "../../../../helpers/DatabaseTypes";
 import { CertificationStatus, DBNames } from "../../../../helpers/Enums";
+import { http_logoUpload } from "../../http/functions";
 import { createClient } from "../server";
 
 
+export const _createAnnouncement = async (title : string, text: string) => {
+    const supabase = await createClient();
+
+    const {data: user, error : userError} = await supabase.auth.getUser();
+
+    const {data, error} = await supabase
+                        .from(DBNames.COMPANIES_DB)
+                        .select()
+                        .eq('name', user.user.user_metadata.company as string)
+                        .eq('is_verified', true);
+    
+    const {data: insert} = await supabase
+                        .from(DBNames.ANNOUNCEMENTS_DB)
+                        .insert({
+                            company_id: data[0].id,
+                            title: title,
+                            text: text
+                        });
+    
+    
+}
 
 export const _createNewCompany = async (
     name: string, 
     descriptions: string, 
     volunteer_work: string,
     email: string, 
-    token : string) => {
+    token : string,
+    formData: FormData) => {
     /**
      * need to convert json object to json string
      */
@@ -39,6 +62,16 @@ export const _createNewCompany = async (
         bool: false,
         mes: message
     };
+
+    const uploadRes = await http_logoUpload(formData);
+
+    if(!uploadRes){
+        console.error('uploading failed');
+        return{
+            bool: false,
+            mes: 'Uploading logo failed, try again later'
+        }
+    }
 
     const supabase = await createClient();
 
@@ -68,7 +101,7 @@ export const _createNewCompany = async (
 export const _getCompanyIdFromDB = async () => {
     const supabase = await createClient();
 
-    const {data, error : userError} = await supabase.auth.getUser()
+    const {data, error : userError} = await supabase.auth.getUser();
     
     if(userError){
         throw new Error(userError.message)

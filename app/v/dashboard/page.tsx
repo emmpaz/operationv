@@ -20,11 +20,6 @@ export default function Page() {
             'maxApplications',
             () => _checkMaxApplications(user.id));
 
-    const [navbar, setNavbar] = useState(false);
-
-    const handleNav = (bool: boolean) => {
-        setNavbar(bool);
-    }
     return (
         <PageWrapper>
             <div className="p-10 flex justify-between items-center">
@@ -33,7 +28,7 @@ export default function Page() {
             </div>
             <div className="flex flex-col md:flex-row w-full p-1 h-72">
                 <div className="w-full lg:w-1/2 bg-neutral md:m-1 rounded shadow-lg overflow-y-auto">
-                    Upcoming events
+                    <h2 className=" text-base-100 text-xl p-5">Upcoming Events</h2>
                 </div>
                 <div className="w-full lg:w-1/2 bg-neutral md:m-1 mt-1 rounded shadow-lg">
                     <h2 className="text-base-100 text-xl p-5">Announcements</h2>

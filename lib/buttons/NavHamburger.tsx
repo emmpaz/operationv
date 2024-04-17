@@ -10,7 +10,7 @@ export const NavHamburger = () => {
     const { handleNav } = useContext(NavContext)!;
     
     return (
-        <div className="flex-none lg:hidden">
+        <div className="flex-none lg:hidden p-2">
             <button
                 className="btn btn-square btn-ghost hover:text-primary"
                 onClick={() => handleNav(true)}

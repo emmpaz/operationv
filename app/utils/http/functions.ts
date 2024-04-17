@@ -1,8 +1,8 @@
 'use server'
 
-export const http_handleImageUpload = async (formData: FormData) => {
+export const http_certImageUpload = async (formData: FormData) => {
     try {
-        const response = await fetch(process.env.NEXT_PUBLIC_SERVER_API_KEY, {
+        const response = await fetch(process.env.NEXT_PUBLIC_CERT_IMAGE_UPLOAD, {
             method: 'POST',
             body: formData,
             headers: {
@@ -16,6 +16,24 @@ export const http_handleImageUpload = async (formData: FormData) => {
     } catch (error) {
         console.error('Error:', error);
     }
+    return false;
+}
+
+export const http_logoUpload = async (formData : FormData) => {
+    try{
+        const res = await fetch(process.env.NEXT_PUBLIC_LOGO_UPLOAD, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true'
+            }
+        })
+        if(res.ok) return true
+    } catch(error){
+        console.error('Error:',error);
+    }
+    return false;
 }
 
 export const http_sendEmail = async (

@@ -11,7 +11,8 @@ export enum DBNames{
     HOURS_LOGGING_DB = "HoursLogging",
     PENDING_CERTIFICATIONS_DB = "PendingCertifications",
     USER_CERTIFICATIONS_DB = "UserCertifications",
-    USERS_DB = "Users"
+    USERS_DB = "Users",
+    ANNOUNCEMENTS_DB = "Announcements"
 }
 
 export enum LoggingParamNames{

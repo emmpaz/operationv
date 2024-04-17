@@ -2,8 +2,7 @@
 
 
 
-import { NavBar } from "../../app/components/common/navbar"
-import { NavHamburger } from "../buttons/NavHamburger"
+import { NavBar } from "../../app/components/common/navbar";
 
 
 
