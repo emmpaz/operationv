@@ -10,6 +10,7 @@ import Certification from "../common/certification";
 import { LoadingSpinner } from "../common/LoadingSpinner";
 import Link from "next/link";
 import { _getCompanyCertificationsFromDB } from "../../utils/supabase/actions/admin.actions";
+import PageWrapper from "../../../lib/layouts/PageWrapper";
 
 
 
@@ -39,9 +40,7 @@ const AdminDashboard = () => {
     }
 
     return (
-        <div className=" flex bg-custom">
-            <div className="w-full flex">
-                <NavBar open={navbar} handleNav={handleNav}/>
+        <PageWrapper>
                 <div className="w-full flex flex-col max-h-screen overflow-y-auto">
                     <div className="p-10 flex justify-between items-center">
                         <div className="flex-none lg:hidden">
@@ -104,8 +103,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </PageWrapper>
     )
 
 }

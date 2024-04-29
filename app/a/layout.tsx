@@ -1,4 +1,4 @@
-import { AdminPrivateRoutes, AuthPrivateRoutes, VolunteerPrivateRoutes } from "../privateWrappers/PrivateRoutes"
+import { AdminPrivateRoutes, AuthPrivateRoutes } from "../utils/privateWrappers/PrivateRoutes"
 
 
 

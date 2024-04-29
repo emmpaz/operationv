@@ -7,6 +7,7 @@ import { _checkMaxApplications } from "../../utils/supabase/actions/volunteer.ac
 import { NavBar } from "../../components/common/navbar";
 import PageWrapper from "../../../lib/layouts/PageWrapper";
 import { NavHamburger } from "../../../lib/buttons/NavHamburger";
+import { _getMostPopularCertifications } from "../../utils/supabase/actions/general.actions";
 
 
 export default function Page() {
@@ -16,9 +17,16 @@ export default function Page() {
     const {
         data: maxApplications,
         isLoading: LoadingMaxApplications,
-        refetch: maxApp_refetch } = useQuery<boolean>(
+    } = useQuery<boolean>(
             'maxApplications',
             () => _checkMaxApplications(user.id));
+    
+    const {
+        data: popularCerts,
+        isLoading
+    } = useQuery(
+        'popular_certifications',
+        () => _getMostPopularCertifications());
 
     return (
         <PageWrapper>
@@ -38,11 +46,11 @@ export default function Page() {
             <div className="w-full flex p-1">
                 <div className=" m-1 w-full flex flex-col items-center p-2">
                     <div className="w-1/2 flex flex-col">
-                        <h2 className="text-base-100 text-xl py-5">Find Opportunities</h2>
+                        <h2 className="text-base-100 text-xl py-5">Popular Certifications</h2>
                         <div className="w-full h-96 bg-neutral md:m-1 mt-1 rounded shadow-lg">
 
                         </div>
-                        <h2 className="text-base-100 text-xl py-5">Recommened Opportunites</h2>
+                        <h2 className="text-base-100 text-xl py-5">Recommended Opportunites</h2>
                         <div className="w-full h-96 bg-neutral md:m-1 mt-1 rounded shadow-lg">
 
                         </div>

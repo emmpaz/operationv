@@ -52,9 +52,6 @@ export const VolunteerDashboard = () => {
     }
 
     return (
-        <div className="flex bg-custom">
-            <div className="w-full flex">
-                <NavBar open={navbar} handleNav={handleNav} />
                 <div className="w-full flex flex-col max-h-screen overflow-y-auto">
                     <div className="p-10 flex justify-between items-center">
                         <div className="flex-none lg:hidden">
@@ -87,7 +84,6 @@ export const VolunteerDashboard = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+
     )
 }

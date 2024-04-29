@@ -1,4 +1,4 @@
-import { AuthPrivateRoutes, OnboardingPrivateRoutes, VolunteerPrivateRoutes } from "../privateWrappers/PrivateRoutes"
+import { AuthPrivateRoutes, OnboardingPrivateRoutes, VolunteerPrivateRoutes } from "../utils/privateWrappers/PrivateRoutes"
 
 
 

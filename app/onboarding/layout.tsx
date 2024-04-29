@@ -1,4 +1,4 @@
-import { OnboardingDoneRoute } from "../privateWrappers/PrivateRoutes";
+import { OnboardingDoneRoute } from "../utils/privateWrappers/PrivateRoutes"
 
 
 export default function RootLayout({

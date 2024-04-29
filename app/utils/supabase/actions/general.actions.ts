@@ -1,9 +1,16 @@
 'use server'
-import { iCertificationDB, iHoursLoggingDB, iPendingCertificationDB, iUserDB } from "../../../../helpers/DatabaseTypes";
-import { CertificationStatus, DBNames } from "../../../../helpers/Enums";
+import { count } from "console";
+import { iUserDB } from "../../../../helpers/DatabaseTypes";
+import { DBNames } from "../../../../helpers/Enums";
 
 import { createClient } from "../server";
 
+
+/**
+ * get the user from the database that matches the uuid
+ * @param userID the user id
+ * @returns the user
+ */
 export const _getUserFromDB = async (userID : string) => {
 
     const supabase = await createClient();
@@ -62,7 +69,6 @@ export const _getAdminFromDB = async (userID : string) => {
         return data[0]
     }
     return null
-
 }
 
 export const _addAdminRoleAndDB = async (email: string, id : string) => {
@@ -167,4 +173,35 @@ export const _getAllUsersAndCertifications = async () => {
         ...users,
         ...certifications
     ];
+}
+
+export const _getMostPopularCertifications = async () => {
+    const supabase = await createClient();
+
+    const {data : ids, error: rpcError} = await supabase
+                            .rpc('count_popularity');
+
+    
+    
+    if(rpcError){
+        console.error(rpcError);
+        return [];
+    }
+
+    const extractIds = ids.map(r => r.certification_id);
+
+    const {
+        data: certifications,
+        error
+    } = await supabase
+    .from(DBNames.CERTIFICATIONS_DB)
+    .select('*')
+    .in('id', extractIds);
+
+    if(error){
+        console.error(error);
+        return [];
+    }
+    console.log(certifications);
+    return certifications;
 }
