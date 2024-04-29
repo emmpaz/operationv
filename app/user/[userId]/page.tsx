@@ -9,6 +9,7 @@ import { iCertificationDB, iUserDB } from "../../../helpers/DatabaseTypes";
 import ProfileCertification from "../../components/common/ProfileCertification";
 import { _getUserFromDB } from "../../utils/supabase/actions/general.actions";
 import { _getUserCertificationFromDB } from "../../utils/supabase/actions/volunteer.actions";
+import PageWrapper from "../../../lib/layouts/PageWrapper";
 
 
 const UserProfile = ({ params }: { params: { userId: string } }) => {
@@ -52,9 +53,7 @@ const UserProfile = ({ params }: { params: { userId: string } }) => {
                 <span className="loading loading-dots loading-lg bg-primary"></span>
             </div>
             :
-            <div className="w-full min-h-screen bg-custom">
-                <div className="flex h-full">
-                    <NavBar noUser={notSignedIn} open={navbar} handleNav={handleNav} />
+            <PageWrapper>
                     <div className="w-full flex min-h-full flex-col">
                         <div className="flex-none lg:hidden pl-5 pt-5">
                             <button
@@ -96,8 +95,7 @@ const UserProfile = ({ params }: { params: { userId: string } }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    </PageWrapper>
     )
 }
 
