@@ -11,12 +11,12 @@ import { NextResponse } from "next/server";
  */
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
+    const id = searchParams.get('company_name');
     const extensions : string[] = ['.jpg', '.jpeg', '.png'];
-
+    console.log(id);
     // Iterate through the extensions and try to find a matching image
     for (let ext of extensions) {
-        const url = `${process.env.NEXT_PUBLIC_URL_TEMPLATE_KEY}${id}${ext}`;
+        const url = `${process.env.NEXT_PUBLIC_COMPANY_LOGO_URL}${id.toLowerCase()}${ext}`;
         const res = await fetch(url);
         if (res.ok) {
             const contentType = res.headers.get('content-type');

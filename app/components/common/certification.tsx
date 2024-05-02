@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { _applyToCertificationDB } from "../../utils/supabase/actions/volunteer.actions";
-import image from './google.png';
 
 
 
+const companyCache: {[key : string] : string} = {};
 
 const Certification =
     (props:
@@ -20,14 +20,18 @@ const Certification =
             onApply?: () => void
         }) => {
 
-        const { data, isLoading } = useQuery(['certImage', props.certID],
+        const { data, isLoading } = useQuery(['certImage', props.company_name],
             async () => {
+                if(companyCache[props.company_name]) return companyCache[props.company_name];
+
                 const res = await fetch('/api/certimage?' + new URLSearchParams({
-                    id: props.certID
+                    company_name: props.company_name
                 }))
                 if (res.status == 200) {
                     const blob = await res.blob();
-                    return await URL.createObjectURL(blob);
+                    const link = await URL.createObjectURL(blob);
+                    companyCache[props.company_name] = link;
+                    return link;
                 }
             });
 
@@ -37,31 +41,31 @@ const Certification =
                 return
             }
             alert('Failed to apply');
-        }
+        };
 
         return (
-            <div className="flex p-7 w-full bg-neutral rounded shadow-lg relative">
+            <div className="flex p-6 w-full bg-neutral rounded shadow-lg relative">
                 <div className="flex flex-col w-full">
-                    <div className="flex w-full">
+                    <div className="flex w-full items-center">
                         {isLoading ?
                             <LoadingSpinner />
                             :
-                            <div style={{ width: '64px', height: '64px' }}>
-                                <img src={image.src} alt="cert image" />
+                            <div className="w-16 h-16 flex-shrink-0">
+                                <img src={data} alt="cert image" />
                             </div>
                         }
-                        <div className="ml-3">
-                            <p className=" font-semibold text-base-100 line-clamp-1">{props.name}</p>
-                            <p className=" text-sm">{props.company_name}</p>
+                        <div className="ml-3 overflow-hidden">
+                            <p className=" font-semibold text-base-100 truncate">{props.name}</p>
+                            <p className=" text-xs">{props.company_name}</p>
                         </div>
                     </div>
-                    <div className="flex justify-end pt-3">
-                        <button className="btn btn-primary btn-sm rounded font-medium">
+                    <div className="flex justify-end pt-6">
+                        <button className="btn btn-primary btn-xs rounded font-medium">
                             View
                         </button>
                         {/**is admin */}
                         {props.admin &&
-                            (<button className="btn btn-primary rounded font-medium">
+                            (<button className="btn btn-primary btn-xs rounded font-medium">
                                 Edit
                             </button>)
                         }
@@ -79,7 +83,7 @@ const Certification =
                         }
                         {/**max reached */}
                         {props.maxApplied && !props.admin &&
-                            (<button className="btn btn-primary btn-sm rounded font-medium" onClick={handleApply} disabled>
+                            (<button className="btn btn-primary btn-xs rounded font-medium" onClick={handleApply} disabled>
                                 Max Reached
                             </button>)
                         }

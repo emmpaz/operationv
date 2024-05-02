@@ -37,6 +37,7 @@ export default function Page() {
                 <h1 className="text-4xl text-primary">Welcome back {user?.name}!</h1>
             </div>
             <div className="w-full flex justify-center px-5">
+                
                 <PendingCertsSankey/>
             </div>
             <div className="w-full flex p-1">

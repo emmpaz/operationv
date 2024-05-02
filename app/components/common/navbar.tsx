@@ -180,7 +180,10 @@ export const NavBar = (
                             </div>
                         }
                     </div>
-                    <div className={`w-full opacity-70 ${navbar ? 'bg-gray-700' : 'bg-opacity-0'} transition-all duration-300`}>
+                    <div 
+                        className={`w-full opacity-70 ${navbar ? 'bg-gray-700' : 'bg-opacity-0'} transition-all duration-300`}
+                        onClick={() => handleNav(false)}
+                        >
                         <div className="flex-none">
                             <button
                                 className="btn btn-square btn-ghost"

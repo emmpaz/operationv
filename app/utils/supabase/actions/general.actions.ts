@@ -202,6 +202,5 @@ export const _getMostPopularCertifications = async () => {
         console.error(error);
         return [];
     }
-    console.log(certifications);
     return certifications;
 }
