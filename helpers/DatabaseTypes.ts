@@ -41,3 +41,8 @@ export interface iHoursLoggingDB{
     pending_certification_id: string,
     review_hours: boolean
 }
+
+export interface iSkillsDB{
+    id?: string,
+    name: string
+}

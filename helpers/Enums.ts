@@ -12,7 +12,11 @@ export enum DBNames{
     PENDING_CERTIFICATIONS_DB = "PendingCertifications",
     USER_CERTIFICATIONS_DB = "UserCertifications",
     USERS_DB = "Users",
-    ANNOUNCEMENTS_DB = "Announcements"
+    ANNOUNCEMENTS_DB = "Announcements",
+    SKILLS_DB = "Skills",
+    USER_SKILLS_DB = "user_skills",
+    INTERESTS_DB = "Interests",
+    USER_INTERESTS_DB = "user_interests"
 }
 
 export enum LoggingParamNames{

@@ -4,7 +4,7 @@ import { _applyToCertificationDB } from "../../utils/supabase/actions/volunteer.
 
 
 
-const companyCache: {[key : string] : string} = {};
+const companyCache: { [key: string]: string } = {};
 
 const Certification =
     (props:
@@ -17,12 +17,13 @@ const Certification =
             apply: boolean,
             maxApplied?: boolean,
             admin: boolean,
+            profile?: boolean
             onApply?: () => void
         }) => {
 
         const { data, isLoading } = useQuery(['certImage', props.company_name],
             async () => {
-                if(companyCache[props.company_name]) return companyCache[props.company_name];
+                if (companyCache[props.company_name]) return companyCache[props.company_name];
 
                 const res = await fetch('/api/certimage?' + new URLSearchParams({
                     company_name: props.company_name
@@ -46,18 +47,24 @@ const Certification =
         return (
             <div className="flex p-6 w-full bg-neutral rounded shadow-lg relative">
                 <div className="flex flex-col w-full">
-                    <div className="flex w-full items-center">
-                        {isLoading ?
-                            <LoadingSpinner />
-                            :
-                            <div className="w-16 h-16 flex-shrink-0">
-                                <img src={data} alt="cert image" />
+                    <div className="flex border justify-between">
+                        <div className="flex items-center">
+                            {isLoading ?
+                                <LoadingSpinner />
+                                :
+                                <div className="w-16 h-16 flex-shrink-0">
+                                    <img src={data} alt="cert image" />
+                                </div>
+                            }
+                            <div className="ml-3 overflow-hidden">
+                                <p className=" font-semibold text-base-100 truncate">{props.name}</p>
+                                <p className=" text-xs">{props.company_name}</p>
                             </div>
-                        }
-                        <div className="ml-3 overflow-hidden">
-                            <p className=" font-semibold text-base-100 truncate">{props.name}</p>
-                            <p className=" text-xs">{props.company_name}</p>
                         </div>
+                        {props.profile && <div>
+                            <p className="text-sm">1/12/2023</p>
+                            <p className="text-xs text-right">received</p>
+                        </div>}
                     </div>
                     <div className="flex justify-end pt-6">
                         <button className="btn btn-primary btn-xs rounded font-medium">
@@ -71,13 +78,13 @@ const Certification =
                         }
                         {/**not admin but can still apply if max not reached*/}
                         {!props.maxApplied && props.apply && !props.admin &&
-                            (<button className="btn btn-primary btn-sm rounded font-medium" onClick={handleApply}>
+                            (<button className="btn btn-primary btn-xs rounded font-medium" onClick={handleApply}>
                                 Apply
                             </button>)
                         }
                         {/**not admin and already applied*/}
                         {!props.maxApplied && !props.apply && !props.admin &&
-                            (<button className="btn btn-primary btn-sm rounded font-medium" onClick={handleApply} disabled>
+                            (<button className="btn btn-primary btn-xs rounded font-medium" onClick={handleApply} disabled>
                                 Applied
                             </button>)
                         }

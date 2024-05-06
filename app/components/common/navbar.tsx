@@ -65,7 +65,10 @@ export const NavBar = (
                                 </ul>
                         <div className="flex-grow"></div>
                         <div className="p-4 w-full flex flex-col">
-                            <button className="btn btn-ghost mb-1 rounded text-primary border-outline border-primary">Profile</button>
+                            <Link 
+                                className="btn btn-ghost mb-1 rounded text-primary border-outline border-primary"
+                                href={`/user/${user.uuid}`}
+                                >Profile</Link>
                             <button
                                 className="btn btn-primary mb-1 rounded hover:bg-primary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary border-none"
                                 onClick={() => signOutHandler()}
@@ -144,7 +147,10 @@ export const NavBar = (
                                 </ul>
                                 <div className="flex-grow"></div>
                                 <div className="p-4 w-full flex flex-col">
-                                    <button className="btn btn-ghost mb-1 rounded text-primary border-outline border-primary">Profile</button>
+                                    <Link 
+                                        className="btn btn-ghost mb-1 rounded text-primary border-outline border-primary"
+                                        href={`/user/${user.uuid}`}
+                                    >Profile</Link>
                                     <button
                                         className="btn btn-primary mt-1 rounded hover:bg-primary hover:-translate-y-0.5 hover:shadow-lg hover:shadow-secondary border-none"
                                         onClick={() => signOutHandler()}

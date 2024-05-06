@@ -10,6 +10,7 @@ import ProfileCertification from "../../components/common/ProfileCertification";
 import { _getUserFromDB } from "../../utils/supabase/actions/general.actions";
 import { _getUserCertificationFromDB } from "../../utils/supabase/actions/volunteer.actions";
 import PageWrapper from "../../../lib/layouts/PageWrapper";
+import Certification from "../../components/common/certification";
 
 
 const UserProfile = ({ params }: { params: { userId: string } }) => {
@@ -83,12 +84,15 @@ const UserProfile = ({ params }: { params: { userId: string } }) => {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {certList?.map((cert, i) => {
                                     return (
-                                        <ProfileCertification
+                                        <Certification
                                             certID={cert.id}
                                             userID={userData?.id as string}
                                             hours={cert.hours}
                                             name={cert.name}
                                             company_name={cert.company_name}
+                                            apply={false}
+                                            admin={false}
+                                            profile={true}
                                         />
                                     )
                                 })}
